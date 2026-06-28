@@ -1,0 +1,207 @@
+Create a modern premium website for **FFSET Lounge**, an entertainment lounge currently located in **Akure**, with plans to expand to **Lagos** later.
+
+FFSET Lounge sells premium and expensive wines, offers snooker games, PlayStation/console gaming, social hangouts, events, and gaming competitions.
+
+Build the website as a clean, luxury, dark-themed, mobile-responsive platform with a premium lounge feel.
+
+Use the following stack:
+
+* Next.js
+* TypeScript
+* Tailwind CSS
+* Framer Motion for animations
+* Use reusable components
+* Use dummy/static data for now
+* No backend integration yet
+* No payment integration yet
+* Make the UI ready for future backend/API integration
+
+Website pages/sections to create:
+
+1. **Homepage**
+
+   * Hero section with premium lounge branding
+   * Short intro about FFSET Lounge
+   * Call-to-action buttons:
+
+     * Join Competition
+     * View Wines
+     * Book a Table
+   * Highlight services:
+
+     * Premium Wines
+     * Snooker
+     * PlayStation Gaming
+     * Events & Hangouts
+     * Gaming Competitions
+   * Featured competition preview
+   * Featured wines preview
+   * Gallery preview
+   * Location preview
+   * Contact CTA
+
+2. **About Page**
+
+   * Explain FFSET Lounge as a premium entertainment and lifestyle lounge in Akure
+   * Mention future Lagos expansion
+   * Include mission and vision sections
+
+3. **Services Page**
+
+   * Premium Wine Lounge
+   * Snooker
+   * PlayStation / Console Gaming
+   * Birthday Hangouts
+   * Corporate Hangouts
+   * Live Events
+   * Gaming Competitions
+
+4. **Wine Catalogue Page**
+
+   * Display premium wines using cards
+   * Each wine should have:
+
+     * Name
+     * Category
+     * Short description
+     * Bottle size
+     * Availability status
+     * Image placeholder
+   * Do not add online checkout yet
+   * Add “Reserve / Enquire on WhatsApp” button
+
+5. **Gaming Page**
+
+   * Showcase snooker and console gaming
+   * Include available games such as EA FC / FIFA, Mortal Kombat, Call of Duty, NBA 2K
+   * Include gaming packages using static cards
+
+6. **Competition Page**
+
+   * Create a page for upcoming gaming competitions
+   * Main competition example:
+
+     * Title: FFSET FIFA Championship
+     * Registration Fee: ₦5,000
+     * First Prize: ₦100,000
+     * Second Prize: ₦50,000
+     * Third Prize: ₦30,000
+   * Add tournament rules section
+   * Add registration CTA
+   * Add countdown UI
+   * Add static tournament bracket preview
+   * Add static leaderboard preview
+
+7. **Competition Registration Page**
+
+   * Create a registration form UI only
+   * Fields:
+
+     * Full Name
+     * Phone Number
+     * Email Address
+     * Gamertag / Player Name
+     * Preferred Game
+     * State
+   * Add notice: “Payment integration will be added soon.”
+   * Add submit button
+   * On submit, show a success message using frontend state only
+
+8. **Events Page**
+
+   * Display upcoming events using cards
+   * Examples:
+
+     * DJ Night
+     * Game Night
+     * Wine Tasting
+     * Birthday Hangout
+     * Football Viewing Night
+
+9. **Booking Page**
+
+   * Create table reservation form UI only
+   * Fields:
+
+     * Full Name
+     * Phone Number
+     * Date
+     * Time
+     * Number of Guests
+     * Occasion
+     * Special Request
+   * On submit, show a success message using frontend state only
+
+10. **Gallery Page**
+
+    * Create gallery grid with image placeholders
+    * Categories:
+
+      * Lounge Interior
+      * Wines
+      * Gaming Area
+      * Events
+      * Competition Moments
+
+11. **Contact Page**
+
+    * Contact form UI
+    * WhatsApp CTA
+    * Phone number placeholder
+    * Email placeholder
+    * Social media links placeholder
+    * Google Map placeholder
+    * Address: Akure, Ondo State, Nigeria
+
+12. **Admin Dashboard UI Preview**
+    Create a simple admin dashboard design only, not functional yet.
+    Include sidebar links:
+
+    * Dashboard
+    * Wines
+    * Events
+    * Competitions
+    * Players
+    * Bookings
+    * Gallery
+    * Messages
+    * Settings
+
+    Dashboard cards:
+
+    * Total Registrations
+    * Total Bookings
+    * Upcoming Events
+    * Available Wines
+    * Recent Messages
+
+Design requirements:
+
+* Use luxury dark theme
+* Use colors like black, gold, wine red, and white
+* Use smooth animations
+* Use responsive layout
+* Use clean typography
+* Make it look premium, not like a basic template
+* Use placeholder images where real images are not available
+* Use reusable components such as:
+
+  * Navbar
+  * Footer
+  * Hero
+  * SectionTitle
+  * ServiceCard
+  * WineCard
+  * EventCard
+  * CompetitionCard
+  * GalleryGrid
+  * AdminSidebar
+  * DashboardCard
+
+Important:
+
+* Do not include VIP Lounge because FFSET Lounge does not currently have that yet.
+* Keep future expansion support in mind for Lagos branch.
+* Add comments where backend/API integration will later be connected.
+* Make the project easy to extend later with Laravel backend or API.
+* Ensure the website runs without errors.
