@@ -2,18 +2,50 @@
 
 import { useState } from "react";
 import { SelectField, TextField } from "@/components/forms/fields";
+import { submitFormToTelegram } from "@/components/forms/telegram-submit";
 import { Panel } from "@/components/ui";
 
 export function CompetitionRegisterForm() {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   return (
     <form
       className="contents"
-      onSubmit={(event) => {
+      onSubmit={async (event) => {
         event.preventDefault();
-        // TODO: Connect competition registration to backend/API and payment provider.
-        setSubmitted(true);
+        setError(null);
+        setSubmitted(false);
+        setSubmitting(true);
+
+        const form = event.currentTarget;
+        const formData = new FormData(form);
+
+        try {
+          await submitFormToTelegram({
+            formType: "Competition Registration",
+            fields: [
+              { label: "Full Name", value: formData.get("fullName") },
+              { label: "Phone Number", value: formData.get("phone") },
+              { label: "Email Address", value: formData.get("email") },
+              { label: "Gamertag / Player Name", value: formData.get("gamerTag") },
+              { label: "Preferred Game", value: formData.get("preferredGame") },
+              { label: "State", value: formData.get("state") },
+            ],
+          });
+
+          form.reset();
+          setSubmitted(true);
+        } catch (submissionError) {
+          setError(
+            submissionError instanceof Error
+              ? submissionError.message
+              : "Competition registration failed."
+          );
+        } finally {
+          setSubmitting(false);
+        }
       }}
     >
       <Panel className="space-y-5">
@@ -39,10 +71,11 @@ export function CompetitionRegisterForm() {
         </div>
         <p className="text-sm text-[var(--muted)]">Payment integration will be added soon.</p>
         <div className="flex flex-wrap items-center gap-4">
-          <button type="submit" className="luxury-button luxury-button-primary">
-            Submit Registration
+          <button type="submit" className="luxury-button luxury-button-primary" disabled={submitting}>
+            {submitting ? "Sending..." : "Submit Registration"}
           </button>
-          {submitted ? <p className="text-sm text-[var(--gold-soft)]">Registration received. The live payment and player management flow will be connected next.</p> : null}
+          {submitted ? <p className="text-sm text-[var(--gold-soft)]">Registration sent to Telegram successfully.</p> : null}
+          {error ? <p className="text-sm text-[rgb(220,145,145)]">{error}</p> : null}
         </div>
       </Panel>
     </form>
