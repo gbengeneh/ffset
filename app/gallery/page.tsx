@@ -2,7 +2,7 @@ import Image from "next/image";
 import { LazyVideo } from "@/components/lazy-video";
 import { PageHero } from "@/components/page-hero";
 import { Reveal } from "@/components/reveal";
-import { PageSection, Panel } from "@/components/ui";
+import { PageSection } from "@/components/ui";
 import { galleryItems } from "@/lib/site-data";
 
 export default function GalleryPage() {
@@ -16,7 +16,7 @@ export default function GalleryPage() {
       <PageSection containerClassName="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
         {galleryItems.map((item, index) => (
           <Reveal key={item.title} delay={index * 0.06}>
-            <Panel className="overflow-hidden rounded-[1.75rem] p-0">
+            <article className="overflow-hidden rounded-[1.5rem] border border-[rgba(213,170,77,0.12)] bg-[rgba(12,9,10,0.92)] shadow-[0_24px_60px_rgba(0,0,0,0.18)]">
               <div className="relative aspect-[4/3]">
                 {item.type === "video" ? (
                   <LazyVideo
@@ -37,7 +37,7 @@ export default function GalleryPage() {
                   <p className="display-font mt-2 text-2xl text-white">{item.title}</p>
                 </div>
               </div>
-            </Panel>
+            </article>
           </Reveal>
         ))}
       </PageSection>

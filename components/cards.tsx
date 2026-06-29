@@ -1,5 +1,4 @@
 import Image from "next/image";
-import type { ReactNode } from "react";
 import { contactDetails } from "@/lib/site-data";
 import { ActionLink, Panel } from "@/components/ui";
 
@@ -34,24 +33,6 @@ function buildWineWhatsAppHref({
   return `${baseUrl}${separator}text=${encodeURIComponent(lines.join("\n"))}`;
 }
 
-type CardBaseProps = {
-  title: string;
-  description: string;
-  accent?: string;
-  children?: ReactNode;
-};
-
-export function ServiceCard({ title, description, accent, children }: CardBaseProps) {
-  return (
-    <Panel as="article" className="transition duration-300 hover:-translate-y-1 hover:border-[rgba(213,170,77,0.28)]">
-      <p className="mb-3 text-sm uppercase tracking-[0.22em] text-[var(--gold)]">{accent}</p>
-      <h3 className="display-font mb-3 text-2xl text-white">{title}</h3>
-      <p className="text-sm leading-7 text-[var(--muted)]">{description}</p>
-      {children}
-    </Panel>
-  );
-}
-
 type WineCardProps = {
   name: string;
   category: string;
@@ -69,6 +50,7 @@ export function WineCard({
   availability,
   imageUrl,
 }: WineCardProps) {
+  const isRemoteImage = Boolean(imageUrl?.startsWith("http"));
   const wineWhatsAppHref = buildWineWhatsAppHref({
     name,
     category,
@@ -79,15 +61,17 @@ export function WineCard({
 
   return (
     <Panel as="article" className="flex h-full flex-col">
-      <div className="mb-5 rounded-[1.45rem] border border-[rgba(213,170,77,0.12)] bg-[radial-gradient(circle_at_top,_rgba(127,15,46,0.4),_transparent_48%),linear-gradient(180deg,#231416,_#0e090a)] p-5">
-        <div className="mx-auto flex aspect-[4/5] w-full max-w-[210px] items-center justify-center rounded-[1.5rem] border border-[rgba(255,255,255,0.08)] bg-black/25">
+      <div className="-m-5 mb-5 overflow-hidden rounded-t-[1.75rem] border-b border-[rgba(213,170,77,0.12)] bg-[#110d0e] md:-m-6 md:mb-6">
+        <div className="flex aspect-[4/3] w-full items-center justify-center bg-[linear-gradient(180deg,rgba(255,255,255,0.015),rgba(0,0,0,0.08))] p-6">
           <Image
             src={imageUrl ?? "/logo-crop.jpeg"}
             alt={`${name} bottle`}
             width={180}
             height={220}
+            sizes="(max-width: 768px) 144px, 180px"
             loading="lazy"
-            className="h-44 w-36 rounded-3xl object-contain opacity-95"
+            unoptimized={isRemoteImage}
+            className="h-52 w-40 object-contain opacity-95 drop-shadow-[0_16px_22px_rgba(0,0,0,0.22)]"
           />
         </div>
       </div>

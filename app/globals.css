@@ -115,30 +115,51 @@ textarea {
   justify-content: center;
   gap: 0.75rem;
   border-radius: 999px;
-  padding: 0.8rem 1.15rem;
+  border: 1px solid transparent;
+  padding: 0.9rem 1.25rem;
   font-size: 0.88rem;
   font-weight: 700;
   letter-spacing: 0.04em;
   transition:
-    transform 160ms ease,
-    background 160ms ease,
+    transform 180ms ease,
+    background 180ms ease,
     border-color 160ms ease,
-    color 160ms ease;
+    color 160ms ease,
+    box-shadow 180ms ease;
 }
 
 .luxury-button:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px) scale(1.01);
 }
 
 .luxury-button-primary {
   background: linear-gradient(135deg, var(--gold-soft), var(--gold));
   color: #170f05;
+  box-shadow:
+    0 14px 30px rgba(213, 170, 77, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+.luxury-button-primary:hover {
+  box-shadow:
+    0 18px 34px rgba(213, 170, 77, 0.28),
+    0 0 24px rgba(213, 170, 77, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.34);
 }
 
 .luxury-button-secondary {
   border: 1px solid rgba(213, 170, 77, 0.3);
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.045);
   color: var(--text);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.luxury-button-secondary:hover {
+  border-color: rgba(213, 170, 77, 0.45);
+  background: rgba(255, 255, 255, 0.075);
+  box-shadow:
+    0 14px 26px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .form-input {
@@ -183,4 +204,43 @@ textarea {
   font-weight: 700;
   letter-spacing: 0.26em;
   text-transform: uppercase;
+}
+
+.hero-video-zoom {
+  animation: hero-video-zoom 18s ease-in-out infinite alternate;
+  transform-origin: center;
+}
+
+.hero-card-float {
+  animation: hero-card-float 6.4s ease-in-out infinite;
+}
+
+.hero-card-float-delayed {
+  animation-delay: 1.2s;
+}
+
+.hero-card-float-slow {
+  animation-delay: 2.1s;
+  animation-duration: 7.6s;
+}
+
+@keyframes hero-video-zoom {
+  0% {
+    transform: scale(1.06);
+  }
+
+  100% {
+    transform: scale(1.14);
+  }
+}
+
+@keyframes hero-card-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
 }

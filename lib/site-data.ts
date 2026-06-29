@@ -1,53 +1,135 @@
 export const navigation = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
-  { href: "/services", label: "Services" },
-  { href: "/wines", label: "Wines" },
-  { href: "/gaming", label: "Gaming" },
   { href: "/competitions", label: "Competitions" },
   { href: "/events", label: "Events" },
   { href: "/gallery", label: "Gallery" },
-  { href: "/booking", label: "Booking" },
   { href: "/contact", label: "Contact" },
-  { href: "/admin", label: "Admin UI" },
 ];
 
-export const services = [
+export const experienceNavigation = [
+  { href: "/services", label: "Services" },
+  { href: "/gaming", label: "Gaming" },
+  { href: "/wines", label: "Wines" },
+  { href: "/booking", label: "Booking" },
+];
+
+export const mobilePrimaryNavigation = [
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
+  { href: "/competitions", label: "Competitions" },
+  { href: "/events", label: "Events" },
+  { href: "/gallery", label: "Gallery" },
+  { href: "/contact", label: "Contact" },
+];
+
+export type ServiceItem = {
+  title: string;
+  description: string;
+  accent: string;
+  category: string;
+  imageUrl: string;
+  imagePosition?: string;
+  href: string;
+  cta: string;
+  icon: "wine" | "snooker" | "controller" | "calendar" | "trophy" | "briefcase";
+};
+
+export const services: ServiceItem[] = [
   {
     title: "Premium Wine Lounge",
     description:
-      "Rare bottles, prestige pours, and a lounge atmosphere designed for slow conversations and standout evenings.",
+      "Rare bottles, prestige pours, and a warm evening atmosphere designed for slow conversations and standout entrances.",
     accent: "Cellar experience",
+    category: "What We Offer",
+    imageUrl:
+      "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=1200&q=80",
+    href: "/wines",
+    cta: "Explore the wine list",
+    icon: "wine",
   },
   {
     title: "Snooker Sessions",
     description:
-      "Sharp tables, polished lighting, and a competitive environment for casual rounds or serious matchups.",
+      "Sharp tables, controlled lighting, and a refined room built for both relaxed rounds and serious matchups.",
     accent: "Table-side service",
+    category: "What We Offer",
+    imageUrl: "/snooker.jpg",
+    imagePosition: "center 58%",
+    href: "/gaming",
+    cta: "See gaming spaces",
+    icon: "snooker",
   },
   {
     title: "PlayStation Gaming",
     description:
-      "Console battles with crowd energy, comfortable viewing zones, and room for tournament-level intensity.",
+      "Console battles with lounge comfort, cinematic screens, and premium energy that keeps every session social.",
     accent: "Big-screen gaming",
+    category: "What We Offer",
+    imageUrl:
+      "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=80",
+    href: "/gaming",
+    cta: "View gaming packages",
+    icon: "controller",
   },
   {
     title: "Events & Hangouts",
     description:
-      "Birthday linkups, curated social nights, and relaxed premium hosting for private and public experiences.",
+      "Curated nights, birthday linkups, and elevated lounge moments with music, lighting, and elegant seating.",
     accent: "Tailored hosting",
+    category: "What We Offer",
+    imageUrl:
+      "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=1200&q=80",
+    href: "/events",
+    cta: "Discover event nights",
+    icon: "calendar",
   },
   {
     title: "Gaming Competitions",
     description:
-      "Structured tournaments, leaderboard bragging rights, and cash-prize formats built to grow a local scene.",
+      "Structured tournaments, crowd energy, and prize-driven formats that make every challenge feel like a main event.",
     accent: "Prize-driven events",
+    category: "What We Offer",
+    imageUrl:
+      "https://images.unsplash.com/photo-1560253023-3ec5d502959f?auto=format&fit=crop&w=1200&q=80",
+    href: "/competitions",
+    cta: "Enter competitions",
+    icon: "trophy",
   },
   {
     title: "Corporate Lounge Moments",
     description:
-      "A refined backdrop for client meetups, after-hours unwind sessions, and team connection.",
+      "A polished setting for client meetups, after-hours conversations, and premium business-social connection.",
     accent: "Business-social blend",
+    category: "What We Offer",
+    imageUrl:
+      "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1200&q=80",
+    href: "/booking",
+    cta: "Book a private setup",
+    icon: "briefcase",
+  },
+];
+
+export const serviceHighlights = [
+  {
+    title: "Premium Experience",
+    description: "Quality in every detail.",
+    icon: "spark" as const,
+  },
+  {
+    title: "Secure Environment",
+    description: "Comfort and safety guaranteed.",
+    icon: "shield" as const,
+  },
+  {
+    title: "Luxury Atmosphere",
+    description: "Designed for unforgettable nights.",
+    icon: "lounge" as const,
+  },
+  {
+    title: "Located in Akure",
+    description: "Lagos branch coming soon.",
+    icon: "pin" as const,
   },
 ];
 
@@ -68,7 +150,7 @@ export const wines = [
     size: "700ml",
     availability: "Limited Stock",
     imageUrl:
-      "https://zyn.ca/cdn/shop/files/Photo_800x_1.webp?v=1773863187&width=1600",
+      "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&w=1200&q=80",
   },
   {
     name: "Moet & Chandon Nectar",
@@ -95,7 +177,7 @@ export const wines = [
     size: "750ml",
     availability: "Available",
     imageUrl:
-      "https://bevmo.com/cdn/shop/files/e2b51dbc-a2fe-4b41-b646-c85978084b15.png?v=1729068060&width=1946",
+      "https://images.unsplash.com/photo-1516594915697-87eb3b1c14ea?auto=format&fit=crop&w=1200&q=80",
   },
   {
     name: "Veuve Clicquot Brut",
