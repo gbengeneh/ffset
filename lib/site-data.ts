@@ -299,6 +299,16 @@ export const competitionRules = [
   "Good sportsmanship is required throughout the tournament.",
 ];
 
+export const competitionPaymentDetails = {
+  bankName: "Fidelity Bank",
+  accountNumber: "5080217970",
+  accountName: "FF SET LIMITED",
+  entryFee: "₦5,000",
+  firstPrize: "₦100,000",
+  secondPrize: "₦50,000",
+  thirdPrize: "₦30,000",
+};
+
 export const dashboardStats = [
   { label: "Total Registrations", value: "184" },
   { label: "Total Bookings", value: "67" },

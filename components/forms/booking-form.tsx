@@ -52,7 +52,7 @@ export function BookingForm() {
       <Panel className="space-y-5">
         <div className="grid gap-4 md:grid-cols-2">
           <TextField label="Full Name" name="fullName" placeholder="Your full name" autoComplete="name" minLength={3} required />
-          <TextField label="Phone Number" name="phone" type="tel" placeholder="0800 000 0000" autoComplete="tel" pattern="^[0-9+()\\-\\s]{7,}$" hint="Use a reachable phone number for booking confirmation." required />
+          <TextField label="Phone Number" name="phone" type="tel" placeholder="0800 000 0000" autoComplete="tel" pattern="^[0-9()+ -]{7,}$" hint="Use a reachable phone number for booking confirmation." required />
           <TextField label="Date" name="date" type="date" required />
           <TextField label="Time" name="time" type="time" required />
           <TextField label="Number of Guests" name="guests" type="number" min="1" max="30" required />
