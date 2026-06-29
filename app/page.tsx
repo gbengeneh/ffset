@@ -114,17 +114,17 @@ export default function HomePage() {
         </div>
 
         <div className="relative mx-auto w-full max-w-[1320px] px-5 sm:px-6 lg:px-8 xl:px-10">
-          <div className="grid min-h-[36rem] items-end gap-8 py-10 md:min-h-[42rem] md:py-14 xl:grid-cols-[minmax(0,1.72fr)_minmax(260px,0.72fr)] xl:gap-10">
+          <div className="grid min-h-[29rem] items-end gap-5 py-6 sm:min-h-[33rem] sm:gap-7 sm:py-9 md:min-h-[42rem] md:py-14 xl:grid-cols-[minmax(0,1.72fr)_minmax(260px,0.72fr)] xl:gap-10">
             <div className="self-center lg:pl-4 xl:pl-8">
               <Reveal delay={0.05}>
-                <div className="inline-flex items-center gap-3 rounded-full border border-[rgba(213,170,77,0.2)] bg-black/28 px-3.5 py-2.5 shadow-[0_18px_45px_rgba(0,0,0,0.2)] backdrop-blur-md">
+                <div className="inline-flex items-center gap-2.5 rounded-full border border-[rgba(213,170,77,0.2)] bg-black/36 px-3 py-2 shadow-[0_18px_45px_rgba(0,0,0,0.2)] backdrop-blur-md sm:gap-3 sm:px-3.5 sm:py-2.5">
                   <Image
                     src="/logo-crop.jpeg"
                     alt="FFSET Lounge logo"
                     width={48}
                     height={48}
                     loading="lazy"
-                    className="h-11 w-11 rounded-full object-cover"
+                    className="h-9 w-9 rounded-full object-cover sm:h-11 sm:w-11"
                   />
                   <div>
                     <p className="eyebrow text-[0.6rem] sm:text-[0.68rem]">Premium Lounge Experience</p>
@@ -136,13 +136,13 @@ export default function HomePage() {
               </Reveal>
 
               <Reveal delay={0.12}>
-                <h1 className="display-font mt-6 max-w-[50rem] text-[1rem] leading-[0.90] text-white sm:text-[3.3rem] md:mt-7 md:text-[3.7rem] lg:text-[4.05rem] xl:max-w-[52rem] xl:text-[4.7rem]">
+                <h1 className="display-font mt-4 max-w-[50rem] text-[1.85rem] leading-[0.94] text-white sm:mt-6 sm:text-[3.3rem] md:mt-7 md:text-[3.7rem] lg:text-[4.05rem] xl:max-w-[52rem] xl:text-[4.7rem]">
                   A cinematic lounge experience framed by premium wine culture.
                 </h1>
               </Reveal>
 
               <Reveal delay={0.2}>
-                <p className="mt-5 max-w-[39rem] text-sm leading-7 text-[rgba(248,241,230,0.82)] md:mt-6 md:text-[1rem] md:leading-8">
+                <p className="mt-3 max-w-[39rem] text-[0.92rem] leading-6 text-[rgba(248,241,230,0.82)] sm:mt-5 sm:text-sm sm:leading-7 md:mt-6 md:text-[1rem] md:leading-8">
                   FFSET Lounge blends prestige bottles, snooker, console gaming, and competition
                   energy into one polished destination designed for standout nights in Akure and a
                   future Lagos expansion.
@@ -150,21 +150,21 @@ export default function HomePage() {
               </Reveal>
 
               <Reveal delay={0.28}>
-                <div className="mt-7 flex flex-wrap gap-3 md:mt-8">
-                  <ActionLink href="/competitions/register" variant="primary" className="px-5 py-3">
+                <div className="mt-5 flex flex-wrap gap-2.5 sm:mt-7 sm:gap-3 md:mt-8">
+                  <ActionLink href="/competitions/register" variant="primary" className="px-4 py-2.5 text-xs sm:px-5 sm:py-3 sm:text-sm">
                     Join Competition
                   </ActionLink>
-                  <ActionLink href="/wines" className="px-5 py-3">
+                  <ActionLink href="/wines" className="px-4 py-2.5 text-xs sm:px-5 sm:py-3 sm:text-sm">
                     View Wines
                   </ActionLink>
-                  <ActionLink href="/booking" className="px-5 py-3">
+                  <ActionLink href="/booking" className="px-4 py-2.5 text-xs sm:px-5 sm:py-3 sm:text-sm">
                     Book a Table
                   </ActionLink>
                 </div>
               </Reveal>
             </div>
 
-            <div className="grid gap-4 self-start pb-1 sm:grid-cols-3 xl:-translate-y-2 xl:grid-cols-1 xl:self-center xl:justify-self-end xl:max-w-[18rem]">
+            <div className="hidden gap-4 self-start pb-1 sm:grid sm:grid-cols-3 xl:-translate-y-2 xl:grid-cols-1 xl:self-center xl:justify-self-end xl:max-w-[18rem]">
               {heroHighlights.map((item, index) => (
                 <Reveal key={item.label} delay={0.24 + index * 0.08}>
                   <HeroHighlightCard {...item} />

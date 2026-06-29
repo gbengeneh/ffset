@@ -75,13 +75,13 @@ export function Navbar() {
     <header
       className={`sticky top-0 z-50 border-b transition-all duration-300 ${
         scrolled
-          ? "border-white/10 bg-[rgba(7,5,6,0.86)] shadow-[0_18px_40px_rgba(0,0,0,0.28)] backdrop-blur-2xl"
-          : "border-white/6 bg-[rgba(7,5,6,0.58)] backdrop-blur-xl"
+          ? "border-white/10 bg-[rgba(7,5,6,0.92)] shadow-[0_18px_40px_rgba(0,0,0,0.28)] backdrop-blur-2xl md:bg-[rgba(7,5,6,0.86)]"
+          : "border-white/8 bg-[rgba(7,5,6,0.82)] backdrop-blur-xl md:border-white/6 md:bg-[rgba(7,5,6,0.58)]"
       }`}
     >
       <div
         className={`relative mx-auto flex w-full max-w-[1320px] items-center justify-between gap-5 px-5 transition-all duration-300 sm:px-6 lg:px-8 xl:px-10 ${
-          scrolled ? "py-3" : "py-4 md:py-[1.125rem]"
+          scrolled ? "py-2.5 md:py-3" : "py-3 md:py-[1.125rem]"
         }`}
       >
         <Link href="/" className="flex items-center gap-4 pr-4" onClick={() => setOpen(false)}>
@@ -239,7 +239,7 @@ export function Navbar() {
                     href={item.href}
                     className={`block rounded-full px-4 py-2.5 text-sm tracking-[0.03em] transition ${
                       active
-                        ? "bg-[rgba(213,170,77,0.16)] text-[var(--gold-soft)]"
+                        ? "bg-[rgba(213,170,77,0.26)] text-[var(--gold-soft)]"
                         : "text-[var(--muted)] hover:bg-white/5 hover:text-white"
                     }`}
                     onClick={() => setOpen(false)}
