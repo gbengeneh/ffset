@@ -127,8 +127,8 @@ export default function HomePage() {
                     className="h-11 w-11 rounded-full object-cover"
                   />
                   <div>
-                    <p className="eyebrow text-[0.68rem]">Premium Lounge Experience</p>
-                    <p className="text-xs uppercase tracking-[0.22em] text-[var(--muted)]">
+                    <p className="eyebrow text-[0.6rem] sm:text-[0.68rem]">Premium Lounge Experience</p>
+                    <p className="text-[0.65rem] leading-5 uppercase tracking-[0.12em] text-[var(--muted)] sm:text-xs sm:tracking-[0.22em]">
                       Akure • Unwind • Play • Drink
                     </p>
                   </div>
@@ -136,7 +136,7 @@ export default function HomePage() {
               </Reveal>
 
               <Reveal delay={0.12}>
-                <h1 className="display-font mt-6 max-w-[50rem] text-[1rem] leading-[0.90] text-white sm:text-[2.3rem] md:mt-7 md:text-[3.7rem] lg:text-[4.05rem] xl:max-w-[52rem] xl:text-[4.7rem]">
+                <h1 className="display-font mt-6 max-w-[50rem] text-[1rem] leading-[0.90] text-white sm:text-[3.3rem] md:mt-7 md:text-[3.7rem] lg:text-[4.05rem] xl:max-w-[52rem] xl:text-[4.7rem]">
                   A cinematic lounge experience framed by premium wine culture.
                 </h1>
               </Reveal>
