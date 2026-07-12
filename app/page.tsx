@@ -1,9 +1,11 @@
 import Image from "next/image";
 import { CompetitionCard, EventCard, WineCard } from "@/components/cards";
 import { LazyVideo } from "@/components/lazy-video";
+import { LogoMark } from "@/components/logo-mark";
 import { Reveal } from "@/components/reveal";
 import { ServicesShowcase } from "@/components/services-showcase";
 import { SectionTitle } from "@/components/section-title";
+import { RegisterButton } from "@/components/register-button";
 import { ActionLink, PageSection, Panel } from "@/components/ui";
 import { contactDetails, events, galleryItems, wines } from "@/lib/site-data";
 
@@ -78,16 +80,30 @@ function HeroCardIcon({ icon }: Pick<HeroHighlight, "icon">) {
 function HeroHighlightCard({ label, value, icon, motionClassName }: HeroHighlight) {
   return (
     <div className={motionClassName}>
-      <div className="rounded-[1.6rem] border border-white/12 bg-[linear-gradient(180deg,rgba(24,17,19,0.74),rgba(10,8,9,0.62))] p-4 shadow-[0_28px_70px_rgba(0,0,0,0.24)] backdrop-blur-2xl md:p-[1.125rem]">
-        <div className="flex items-start gap-3">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-[rgba(213,170,77,0.2)] bg-[rgba(213,170,77,0.08)]">
+      <div className="rounded-[1.4rem] border border-white/12 bg-[linear-gradient(180deg,rgba(24,17,19,0.74),rgba(10,8,9,0.62))] p-3.5 shadow-[0_28px_70px_rgba(0,0,0,0.24)] backdrop-blur-2xl">
+        <div className="flex items-start gap-2.5">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-[rgba(213,170,77,0.2)] bg-[rgba(213,170,77,0.08)]">
             <HeroCardIcon icon={icon} />
           </div>
           <div>
-            <p className="text-[0.68rem] uppercase tracking-[0.24em] text-[var(--gold)]">{label}</p>
-            <p className="mt-2 text-lg font-medium text-white">{value}</p>
+            <p className="text-[0.62rem] uppercase tracking-[0.2em] text-[var(--gold)]">{label}</p>
+            <p className="mt-1.5 text-base font-medium text-white">{value}</p>
           </div>
         </div>
+      </div>
+    </div>
+  );
+}
+
+function HeroHighlightChip({ label, value, icon }: Pick<HeroHighlight, "label" | "value" | "icon">) {
+  return (
+    <div className="flex shrink-0 snap-start items-center gap-2.5 rounded-2xl border border-white/12 bg-[rgba(12,9,10,0.72)] px-3.5 py-2.5 backdrop-blur-xl">
+      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-[rgba(213,170,77,0.2)] bg-[rgba(213,170,77,0.08)]">
+        <HeroCardIcon icon={icon} />
+      </div>
+      <div>
+        <p className="text-[0.6rem] uppercase tracking-[0.18em] text-[var(--gold)]">{label}</p>
+        <p className="text-sm font-medium whitespace-nowrap text-white">{value}</p>
       </div>
     </div>
   );
@@ -101,7 +117,7 @@ export default function HomePage() {
           <LazyVideo
             className="hero-video-zoom h-full w-full object-cover"
             src="/wine.mp4"
-            poster="/logo-crop.jpeg"
+            poster="/poster-wine.jpg"
             autoPlay
             muted
             loop
@@ -114,21 +130,14 @@ export default function HomePage() {
         </div>
 
         <div className="relative mx-auto w-full max-w-[1320px] px-5 sm:px-6 lg:px-8 xl:px-10">
-          <div className="grid min-h-[29rem] items-end gap-5 py-6 sm:min-h-[33rem] sm:gap-7 sm:py-9 md:min-h-[42rem] md:py-14 xl:grid-cols-[minmax(0,1.72fr)_minmax(260px,0.72fr)] xl:gap-10">
-            <div className="self-center lg:pl-4 xl:pl-8">
+          <div className="grid min-h-[30rem] grid-cols-1 items-end gap-4 py-8 sm:min-h-[28rem] sm:gap-5 sm:py-7 md:min-h-[32rem] md:py-9 xl:grid-cols-[minmax(0,1.72fr)_minmax(260px,0.72fr)] xl:gap-10">
+            <div className="min-w-0 self-center lg:pl-4 xl:pl-8">
               <Reveal delay={0.05}>
-                <div className="inline-flex items-center gap-2.5 rounded-full border border-[rgba(213,170,77,0.2)] bg-black/36 px-3 py-2 shadow-[0_18px_45px_rgba(0,0,0,0.2)] backdrop-blur-md sm:gap-3 sm:px-3.5 sm:py-2.5">
-                  <Image
-                    src="/logo-crop.jpeg"
-                    alt="FFSET Lounge logo"
-                    width={48}
-                    height={48}
-                    loading="lazy"
-                    className="h-9 w-9 rounded-full object-cover sm:h-11 sm:w-11"
-                  />
+                <div className="inline-flex items-center gap-2 rounded-full border border-[rgba(213,170,77,0.2)] bg-black/36 px-2.5 py-1.5 shadow-[0_18px_45px_rgba(0,0,0,0.2)] backdrop-blur-md sm:gap-2.5 sm:px-3 sm:py-2">
+                  <LogoMark className="h-7 w-7 rounded-full sm:h-8 sm:w-8" />
                   <div>
-                    <p className="eyebrow text-[0.6rem] sm:text-[0.68rem]">Premium Lounge Experience</p>
-                    <p className="text-[0.65rem] leading-5 uppercase tracking-[0.12em] text-[var(--muted)] sm:text-xs sm:tracking-[0.22em]">
+                    <p className="eyebrow text-[0.55rem] sm:text-[0.62rem]">Premium Lounge Experience</p>
+                    <p className="text-[0.6rem] leading-4 uppercase tracking-[0.1em] text-[var(--muted)] sm:text-[0.68rem] sm:tracking-[0.18em]">
                       Akure • Unwind • Play • Drink
                     </p>
                   </div>
@@ -136,13 +145,13 @@ export default function HomePage() {
               </Reveal>
 
               <Reveal delay={0.12}>
-                <h1 className="display-font mt-4 max-w-[50rem] text-[1.85rem] leading-[0.94] text-white sm:mt-6 sm:text-[3.3rem] md:mt-7 md:text-[3.7rem] lg:text-[4.05rem] xl:max-w-[52rem] xl:text-[4.7rem]">
+                <h1 className="display-font text-balance mt-3 max-w-[36rem] text-[1.7rem] leading-[1.14] text-white sm:mt-4 sm:text-[2.15rem] sm:leading-[1.08] md:text-[2.55rem] lg:text-[2.8rem] xl:max-w-[40rem] xl:text-[3.15rem]">
                   A cinematic lounge experience framed by premium wine culture.
                 </h1>
               </Reveal>
 
               <Reveal delay={0.2}>
-                <p className="mt-3 max-w-[39rem] text-[0.92rem] leading-6 text-[rgba(248,241,230,0.82)] sm:mt-5 sm:text-sm sm:leading-7 md:mt-6 md:text-[1rem] md:leading-8">
+                <p className="text-pretty mt-2.5 max-w-[32rem] text-[0.85rem] leading-6 text-[rgba(248,241,230,0.82)] sm:mt-3.5 sm:text-[0.875rem] sm:leading-7 md:text-[0.9rem]">
                   FFSET Lounge blends prestige bottles, snooker, console gaming, and competition
                   energy into one polished destination designed for standout nights in Akure and a
                   future Lagos expansion.
@@ -150,16 +159,27 @@ export default function HomePage() {
               </Reveal>
 
               <Reveal delay={0.28}>
-                <div className="mt-5 flex flex-wrap gap-2.5 sm:mt-7 sm:gap-3 md:mt-8">
-                  <ActionLink href="/competitions/register" variant="primary" className="px-4 py-2.5 text-xs sm:px-5 sm:py-3 sm:text-sm">
+                <div className="mt-4 grid grid-cols-2 gap-2 sm:mt-5 sm:flex sm:flex-wrap sm:gap-2.5">
+                  <RegisterButton
+                    variant="primary"
+                    className="col-span-2 px-4 py-2.5 text-xs sm:col-auto sm:px-4 sm:py-2.5 sm:text-[0.83rem]"
+                  >
                     Join Competition
-                  </ActionLink>
-                  <ActionLink href="/wines" className="px-4 py-2.5 text-xs sm:px-5 sm:py-3 sm:text-sm">
+                  </RegisterButton>
+                  <ActionLink href="/wines" className="px-4 py-2.5 text-xs sm:px-4 sm:py-2.5 sm:text-[0.83rem]">
                     View Wines
                   </ActionLink>
-                  <ActionLink href="/booking" className="px-4 py-2.5 text-xs sm:px-5 sm:py-3 sm:text-sm">
+                  <ActionLink href="/booking" className="px-4 py-2.5 text-xs sm:px-4 sm:py-2.5 sm:text-[0.83rem]">
                     Book a Table
                   </ActionLink>
+                </div>
+              </Reveal>
+
+              <Reveal delay={0.34}>
+                <div className="scrollbar-none -mx-5 mt-4 flex snap-x snap-mandatory gap-2 overflow-x-auto px-5 pb-1 sm:hidden">
+                  {heroHighlights.map((item) => (
+                    <HeroHighlightChip key={item.label} {...item} />
+                  ))}
                 </div>
               </Reveal>
             </div>
@@ -183,19 +203,21 @@ export default function HomePage() {
         </Reveal>
         <Reveal delay={0.12}>
           <Panel>
-            <p className="eyebrow">Featured Competition Preview</p>
-            <h3 className="display-font mt-4 text-3xl text-white">
+            <p className="eyebrow text-[0.68rem]">Compete at FFSET</p>
+            <h3 className="display-font mt-3 text-[1.6rem] leading-[1.1] text-white sm:text-[1.9rem]">
               Tournament culture is part of the experience.
             </h3>
-            <p className="mt-4 text-sm leading-8 text-[var(--muted)]">
-              Structured match days, bracket visibility, player check-in, and a spectator-friendly
-              setting make every competition feel like an event.
+            <p className="mt-3 text-[0.85rem] leading-6 text-[var(--muted)] sm:text-[0.92rem] sm:leading-7">
+              Live brackets, player check-in, and a crowd to match — every tournament plays like a
+              main event.
             </p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <ActionLink href="/competitions">View Competition</ActionLink>
-              <ActionLink href="/competitions/register" variant="primary">
-                Register Now
+            <div className="mt-5 flex flex-wrap gap-2.5">
+              <ActionLink href="/competitions" className="px-4 py-2.5 text-[0.83rem]">
+                View Competition
               </ActionLink>
+              <RegisterButton variant="primary" className="px-4 py-2.5 text-[0.83rem]">
+                Register Now
+              </RegisterButton>
             </div>
           </Panel>
         </Reveal>
@@ -204,8 +226,8 @@ export default function HomePage() {
       <PageSection className="section-space pt-0">
         <SectionTitle
           eyebrow="Featured Wines"
-          title="Premium labels curated for status, celebration, and slow evenings."
-          description="The catalogue is ready for future inventory integration, but already designed to present the lounge as a luxury destination."
+          title="Wine, champagne, and spirits, ready to reserve."
+          description="A rotating selection of bottles — reserve any of them directly on WhatsApp."
         />
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {wines.slice(0, 3).map((wine, index) => (
@@ -219,8 +241,8 @@ export default function HomePage() {
       <PageSection className="section-space pt-0">
         <SectionTitle
           eyebrow="Gallery Preview"
-          title="A visual identity that feels alive even before the full gallery expands."
-          description="Real videos and imagery from your public assets are already built into the experience to avoid a placeholder-template feel."
+          title="Inside the lounge, in pictures and video."
+          description="A look at the wine nights, snooker tables, and crowd that shows up for both."
         />
         <div className="grid gap-6 lg:grid-cols-3">
           {galleryItems.slice(0, 3).map((item, index) => (
@@ -231,7 +253,7 @@ export default function HomePage() {
                     <LazyVideo
                       className="h-full w-full object-cover"
                       src={item.src}
-                      poster="/logo-crop.jpeg"
+                      poster={item.poster}
                       autoPlay
                       muted
                       loop
@@ -248,9 +270,9 @@ export default function HomePage() {
                     />
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/25 to-transparent" />
-                  <div className="absolute inset-x-0 bottom-0 p-5">
-                    <p className="text-xs uppercase tracking-[0.22em] text-[var(--gold)]">{item.category}</p>
-                    <p className="display-font mt-2 text-2xl text-white">{item.title}</p>
+                  <div className="absolute inset-x-0 bottom-0 p-4">
+                    <p className="text-[0.68rem] uppercase tracking-[0.2em] text-[var(--gold)]">{item.category}</p>
+                    <p className="display-font mt-1.5 text-xl text-white sm:text-2xl">{item.title}</p>
                   </div>
                 </div>
               </article>
@@ -264,11 +286,13 @@ export default function HomePage() {
           <Panel>
             <SectionTitle
               eyebrow="Location"
-              title="Grounded in Akure. Designed to scale."
-              description="FFSET Lounge serves Akure today while keeping the brand, interface, and service model ready for a Lagos branch."
+              title="Grounded in Akure. Built to scale."
+              description="Visit us in Akure today, with a Lagos location planned next."
             />
-            <p className="text-sm leading-8 text-[var(--muted)]">{contactDetails.address}</p>
-            <ActionLink href="/contact" variant="primary" className="mt-7">
+            <p className="text-[0.85rem] leading-6 text-[var(--muted)] sm:text-[0.92rem] sm:leading-7">
+              {contactDetails.address}
+            </p>
+            <ActionLink href="/contact" variant="primary" className="mt-5 px-4 py-2.5 text-[0.83rem]">
               Contact the Lounge
             </ActionLink>
           </Panel>

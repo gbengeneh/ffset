@@ -75,16 +75,16 @@ export function WineCard({
           />
         </div>
       </div>
-      <div className="mb-4 flex items-center justify-between gap-4">
+      <div className="mb-3 flex items-center justify-between gap-4">
         <div>
-          <p className="text-xs uppercase tracking-[0.2em] text-[var(--gold)]">{category}</p>
-          <h3 className="display-font mt-2 text-2xl text-white">{name}</h3>
+          <p className="text-[0.7rem] uppercase tracking-[0.18em] text-[var(--gold)]">{category}</p>
+          <h3 className="display-font mt-1.5 text-xl text-white sm:text-2xl">{name}</h3>
         </div>
         <span className="rounded-full border border-[rgba(213,170,77,0.18)] px-3 py-1 text-xs text-[var(--gold-soft)]">
           {availability}
         </span>
       </div>
-      <p className="mb-4 text-sm leading-7 text-[var(--muted)]">{description}</p>
+      <p className="mb-3 text-[0.82rem] leading-6 text-[var(--muted)] sm:text-sm sm:leading-7">{description}</p>
       <div className="mt-auto flex flex-col items-start justify-between gap-3 pt-4 text-sm text-[var(--muted)] sm:flex-row sm:items-center">
         <span>{size}</span>
         <ActionLink href={wineWhatsAppHref} className="px-4 py-3 text-xs">
@@ -104,9 +104,9 @@ type EventCardProps = {
 export function EventCard({ title, date, description }: EventCardProps) {
   return (
     <Panel as="article">
-      <p className="mb-2 text-sm uppercase tracking-[0.24em] text-[var(--gold)]">{date}</p>
-      <h3 className="display-font mb-3 text-2xl text-white">{title}</h3>
-      <p className="text-sm leading-7 text-[var(--muted)]">{description}</p>
+      <p className="mb-2 text-[0.7rem] uppercase tracking-[0.2em] text-[var(--gold)]">{date}</p>
+      <h3 className="display-font mb-2 text-xl text-white sm:text-2xl">{title}</h3>
+      <p className="text-[0.82rem] leading-6 text-[var(--muted)] sm:text-sm sm:leading-7">{description}</p>
     </Panel>
   );
 }
@@ -120,16 +120,16 @@ type CompetitionCardProps = {
 export function CompetitionCard({ title, prize, fee }: CompetitionCardProps) {
   return (
     <Panel as="article">
-      <p className="mb-2 text-sm uppercase tracking-[0.22em] text-[var(--gold)]">Upcoming tournament</p>
-      <h3 className="display-font mb-4 text-3xl text-white">{title}</h3>
+      <p className="mb-2 text-[0.7rem] uppercase tracking-[0.2em] text-[var(--gold)]">Upcoming tournament</p>
+      <h3 className="display-font mb-3 text-xl text-white sm:text-2xl">{title}</h3>
       <div className="grid gap-3 text-sm text-[var(--muted)] sm:grid-cols-2">
-        <div className="rounded-2xl border border-white/7 bg-white/3 p-4">
-          <p className="text-xs uppercase tracking-[0.2em] text-[var(--gold)]">Registration</p>
-          <p className="mt-2 text-lg text-white">{fee}</p>
+        <div className="rounded-2xl border border-white/7 bg-white/3 p-3.5">
+          <p className="text-[0.68rem] uppercase tracking-[0.18em] text-[var(--gold)]">Registration</p>
+          <p className="mt-1.5 text-base text-white">{fee}</p>
         </div>
-        <div className="rounded-2xl border border-white/7 bg-white/3 p-4">
-          <p className="text-xs uppercase tracking-[0.2em] text-[var(--gold)]">Top prize</p>
-          <p className="mt-2 text-lg text-white">{prize}</p>
+        <div className="rounded-2xl border border-white/7 bg-white/3 p-3.5">
+          <p className="text-[0.68rem] uppercase tracking-[0.18em] text-[var(--gold)]">Top prize</p>
+          <p className="mt-1.5 text-base text-white">{prize}</p>
         </div>
       </div>
     </Panel>

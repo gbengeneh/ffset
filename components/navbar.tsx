@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useEffectEvent, useState } from "react";
@@ -10,6 +9,8 @@ import {
   navigation,
 } from "@/lib/site-data";
 import { ActionLink } from "@/components/ui";
+import { LogoMark } from "@/components/logo-mark";
+import { useRegisterModal } from "@/components/register-modal";
 
 function ArrowIcon() {
   return (
@@ -51,6 +52,7 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   const [experienceOpen, setExperienceOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { open: openRegisterModal } = useRegisterModal();
 
   const experienceActive = experienceNavigation.some((item) => pathname === item.href);
 
@@ -86,14 +88,7 @@ export function Navbar() {
       >
         <Link href="/" className="flex items-center gap-4 pr-4" onClick={() => setOpen(false)}>
           <div className="gold-ring rounded-[1.45rem] border border-[var(--border)] bg-black/60 p-2.5">
-            <Image
-              src="/logo-crop.jpeg"
-              alt="FFSET Lounge logo"
-              width={64}
-              height={64}
-              loading="lazy"
-              className="h-[3.25rem] w-[3.25rem] rounded-[1rem] object-cover md:h-14 md:w-14"
-            />
+            <LogoMark className="h-[3.25rem] w-[3.25rem] rounded-[1rem] md:h-14 md:w-14" />
           </div>
           <div className="space-y-1">
             <p className="display-font text-xl font-semibold tracking-[0.2em] text-[var(--gold-soft)] md:text-[1.35rem]">
@@ -251,15 +246,17 @@ export function Navbar() {
             })}
 
             <li className="pt-2 md:pt-0 md:pl-3">
-              <ActionLink
-                href="/competitions/register"
-                variant="primary"
-                className="group w-full px-5 py-3 text-sm md:w-auto"
-                onClick={() => setOpen(false)}
+              <button
+                type="button"
+                className="luxury-button luxury-button-primary group w-full px-5 py-3 text-sm md:w-auto"
+                onClick={() => {
+                  setOpen(false);
+                  openRegisterModal();
+                }}
               >
                 <span>Join Competition</span>
                 <ArrowIcon />
-              </ActionLink>
+              </button>
             </li>
           </ul>
         </nav>

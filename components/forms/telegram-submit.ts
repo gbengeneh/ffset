@@ -27,7 +27,9 @@ export async function submitFormToTelegram({
   });
 
   if (!response.ok) {
-    const payload = (await response.json().catch(() => null)) as { error?: string } | null;
-    throw new Error(payload?.error ?? "Telegram submission failed.");
+    const payload = (await response.json().catch(() => null)) as
+      | { error?: string; details?: string }
+      | null;
+    throw new Error(payload?.details || payload?.error || "Telegram submission failed.");
   }
 }

@@ -39,7 +39,7 @@ export const services: ServiceItem[] = [
   {
     title: "Premium Wine Lounge",
     description:
-      "Rare bottles, prestige pours, and a warm evening atmosphere designed for slow conversations and standout entrances.",
+      "Rare bottles and prestige pours in a warm room built for slow conversations.",
     accent: "Cellar experience",
     category: "What We Offer",
     imageUrl:
@@ -51,7 +51,7 @@ export const services: ServiceItem[] = [
   {
     title: "Snooker Sessions",
     description:
-      "Sharp tables, controlled lighting, and a refined room built for both relaxed rounds and serious matchups.",
+      "Sharp tables and controlled lighting, for casual games or serious matchups.",
     accent: "Table-side service",
     category: "What We Offer",
     imageUrl: "/snooker.jpg",
@@ -63,7 +63,7 @@ export const services: ServiceItem[] = [
   {
     title: "PlayStation Gaming",
     description:
-      "Console battles with lounge comfort, cinematic screens, and premium energy that keeps every session social.",
+      "Console battles on big screens, built for a social, competitive crowd.",
     accent: "Big-screen gaming",
     category: "What We Offer",
     imageUrl:
@@ -75,7 +75,7 @@ export const services: ServiceItem[] = [
   {
     title: "Events & Hangouts",
     description:
-      "Curated nights, birthday linkups, and elevated lounge moments with music, lighting, and elegant seating.",
+      "Birthday linkups and themed nights, styled with music, lighting, and group seating.",
     accent: "Tailored hosting",
     category: "What We Offer",
     imageUrl:
@@ -87,7 +87,7 @@ export const services: ServiceItem[] = [
   {
     title: "Gaming Competitions",
     description:
-      "Structured tournaments, crowd energy, and prize-driven formats that make every challenge feel like a main event.",
+      "Structured tournaments and prize-driven formats that turn every match into a main event.",
     accent: "Prize-driven events",
     category: "What We Offer",
     imageUrl:
@@ -99,7 +99,7 @@ export const services: ServiceItem[] = [
   {
     title: "Corporate Lounge Moments",
     description:
-      "A polished setting for client meetups, after-hours conversations, and premium business-social connection.",
+      "A polished setting for client meetups and after-hours business conversations.",
     accent: "Business-social blend",
     category: "What We Offer",
     imageUrl:
@@ -112,24 +112,24 @@ export const services: ServiceItem[] = [
 
 export const serviceHighlights = [
   {
-    title: "Premium Experience",
-    description: "Quality in every detail.",
+    title: "Six Experiences, One Roof",
+    description: "Wine, snooker, gaming, events, competitions, and private hosting.",
     icon: "spark" as const,
   },
   {
-    title: "Secure Environment",
-    description: "Comfort and safety guaranteed.",
+    title: "Managed & Secure",
+    description: "Attentive staff and controlled access throughout your visit.",
     icon: "shield" as const,
   },
   {
-    title: "Luxury Atmosphere",
-    description: "Designed for unforgettable nights.",
+    title: "Built for Groups",
+    description: "Flexible seating for pairs, crews, and full-lounge bookings.",
     icon: "lounge" as const,
   },
   {
-    title: "Located in Akure",
-    description: "Lagos branch coming soon.",
-    icon: "pin" as const,
+    title: "Book on WhatsApp",
+    description: "Reserve a table, wine, or event slot in one message.",
+    icon: "chat" as const,
   },
 ];
 
@@ -140,8 +140,7 @@ export const wines = [
     description: "A prestige celebration bottle with bright citrus depth and creamy finish.",
     size: "750ml",
     availability: "Available",
-    imageUrl:
-      "https://images.vivino.com/thumbs/s5aXYaQiTu-V_xEYI3KXRg_pb_x600.png",
+    imageUrl: "/dom-perignon.jpg",
   },
   {
     name: "Hennessy XO",
@@ -149,8 +148,7 @@ export const wines = [
     description: "Layered oak spice and velvet warmth for premium late-night sipping.",
     size: "700ml",
     availability: "Limited Stock",
-    imageUrl:
-      "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&w=1200&q=80",
+    imageUrl: "/hennessy-xo.jpg",
   },
   {
     name: "Moet & Chandon Nectar",
@@ -167,8 +165,7 @@ export const wines = [
     description: "Elegant agave character with a polished, collector-worthy finish.",
     size: "750ml",
     availability: "Reserve Only",
-    imageUrl:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Don_Julio_2014.jpg/250px-Don_Julio_2014.jpg",
+    imageUrl: "/don-julio-1942.jpg",
   },
   {
     name: "Chateau Margaux Reserve",
@@ -176,8 +173,7 @@ export const wines = [
     description: "Full-bodied structure for guests who want heritage and statement pours.",
     size: "750ml",
     availability: "Available",
-    imageUrl:
-      "https://images.unsplash.com/photo-1516594915697-87eb3b1c14ea?auto=format&fit=crop&w=1200&q=80",
+    imageUrl: "/red-wine-reserve.jpg",
   },
   {
     name: "Veuve Clicquot Brut",
@@ -217,70 +213,104 @@ export const gamingPackages = [
   },
 ];
 
-export const events = [
+export type LoungeEvent = {
+  title: string;
+  date: string;
+  frequency: "Weekly" | "Monthly" | "On Request" | "Seasonal";
+  description: string;
+  icon: "music" | "controller" | "wine" | "cake" | "trophy";
+  imageUrl: string;
+  imagePosition?: string;
+};
+
+export const events: LoungeEvent[] = [
   {
     title: "DJ Night",
     date: "Every Friday",
+    frequency: "Weekly",
     description: "Deep lounge energy with a curated sound palette and late-night momentum.",
+    icon: "music",
+    imageUrl:
+      "https://images.unsplash.com/photo-1750700383190-85b2a6626916?auto=format&fit=crop&w=1200&q=80",
   },
   {
     title: "Game Night",
     date: "Every Saturday",
+    frequency: "Weekly",
     description: "Competitive console rotations, bragging rights, and a packed crowd vibe.",
+    icon: "controller",
+    imageUrl: "/game-night.jpg",
   },
   {
     title: "Wine Tasting",
     date: "First Sunday Monthly",
+    frequency: "Monthly",
     description: "Guided premium selections with pairing notes and exclusive reserve previews.",
+    icon: "wine",
+    imageUrl:
+      "https://images.unsplash.com/photo-1685461936207-f4b86fe7fcf4?auto=format&fit=crop&w=1200&q=80",
   },
   {
     title: "Birthday Hangout",
     date: "On Request",
+    frequency: "On Request",
     description: "Custom setup for intimate celebrations with premium service options.",
+    icon: "cake",
+    imageUrl:
+      "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1200&q=80",
   },
   {
     title: "Football Viewing Night",
     date: "Match Days",
+    frequency: "Seasonal",
     description: "Big-screen football, sharp sound, and a social atmosphere built for drama.",
+    icon: "trophy",
+    imageUrl:
+      "https://images.unsplash.com/photo-1671368913134-c211bc02487f?auto=format&fit=crop&w=1200&q=80",
   },
 ];
 
-export const galleryItems = [
+export type GalleryItem = {
+  title: string;
+  category: string;
+  type: "image" | "video";
+  src: string;
+  poster?: string;
+};
+
+export const galleryItems: GalleryItem[] = [
   {
-    title: "Signature Brand Mark",
-    category: "Lounge Identity",
-    type: "image" as const,
-    src: "/logo-crop.jpeg",
+    title: "Snooker Lounge",
+    category: "Interior",
+    type: "image",
+    src: "/snooker.jpg",
   },
   {
-    title: "Wine Display Motion",
+    title: "Wine Display",
     category: "Wines",
-    type: "video" as const,
+    type: "video",
     src: "/wine.mp4",
+    poster: "/poster-wine.jpg",
   },
   {
     title: "Bottle Package Showcase",
     category: "Premium Packages",
-    type: "video" as const,
+    type: "video",
     src: "/wine packages.mp4",
+    poster: "/poster-packages.jpg",
   },
   {
-    title: "Celebrity Visit Moment",
-    category: "Events",
-    type: "video" as const,
+    title: "Lyta at FFSET Lounge",
+    category: "Celebrity Visit",
+    type: "video",
     src: "/lyta nigeria celebrity in FFset.mp4",
+    poster: "/poster-lyta.jpg",
   },
   {
-    title: "OBIDEYI OLUWASEYI",
-    category: "CEO",
-    type: "image" as const,
+    title: "Meet the Founder",
+    category: "Leadership",
+    type: "image",
     src: "/ceo.jpeg",
-  },
-  {
-    title: "OBIDEYI OLUWASEYI Portrait",
-    category: "CEO",
-    type: "image" as const,
-    src: "/ceo2.jpeg",
   },
 ];
 

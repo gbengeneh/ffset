@@ -26,7 +26,7 @@ function ServiceIcon({ icon }: Pick<ServiceItem, "icon">) {
   const props = {
     "aria-hidden": true,
     viewBox: "0 0 24 24",
-    className: "h-6 w-6 text-[var(--gold-soft)] transition-transform duration-300 group-hover:rotate-3",
+    className: "h-4.5 w-4.5 text-[var(--gold-soft)] transition-transform duration-300 group-hover:rotate-3 sm:h-5 sm:w-5",
     fill: "none",
     stroke: "currentColor",
     strokeWidth: "1.7",
@@ -101,7 +101,7 @@ function HighlightIcon({ icon }: { icon: (typeof serviceHighlights)[number]["ico
   const props = {
     "aria-hidden": true,
     viewBox: "0 0 24 24",
-    className: "h-6 w-6 text-[var(--gold-soft)]",
+    className: "h-5 w-5 text-[var(--gold-soft)]",
     fill: "none",
     stroke: "currentColor",
     strokeWidth: "1.8",
@@ -132,6 +132,14 @@ function HighlightIcon({ icon }: { icon: (typeof serviceHighlights)[number]["ico
           <path d="M12.5 18v-1.2a3.3 3.3 0 0 1 3.3-3.3h1.4a3.3 3.3 0 0 1 3.3 3.3V18" />
         </svg>
       );
+    case "chat":
+      return (
+        <svg {...props}>
+          <path d="M4 5.5h16v10.2H9.8L5.5 19V15.7H4V5.5Z" />
+          <path d="M8 9.3h8" />
+          <path d="M8 12.3h5" />
+        </svg>
+      );
     default:
       return (
         <svg {...props}>
@@ -144,22 +152,21 @@ function HighlightIcon({ icon }: { icon: (typeof serviceHighlights)[number]["ico
 
 function SectionHeader() {
   return (
-    <div className="mx-auto mb-12 flex max-w-3xl flex-col items-center text-center md:mb-16">
-      <p className="eyebrow">What We Offer</p>
-      <h2 className="display-font mt-5 text-[2.8rem] leading-[0.95] text-white sm:text-[3.5rem] md:text-[4.8rem]">
+    <div className="mx-auto mb-8 flex max-w-3xl flex-col items-center text-center md:mb-10">
+      <p className="eyebrow text-[0.68rem]">What We Offer</p>
+      <h2 className="display-font mt-3 text-[1.9rem] leading-[1.05] text-white sm:text-[2.3rem] md:text-[3.1rem]">
         Our Services
       </h2>
-      <div className="mt-5 flex items-center gap-4 text-[var(--gold)]">
-        <span className="h-px w-20 bg-[linear-gradient(90deg,transparent,rgba(213,170,77,0.72))]" />
-        <span className="flex h-8 w-8 items-center justify-center rounded-full border border-[rgba(213,170,77,0.26)] bg-[rgba(213,170,77,0.06)]">
-          <span className="h-2.5 w-2.5 rounded-full border border-[rgba(213,170,77,0.9)]" />
+      <div className="mt-3.5 flex items-center gap-3 text-[var(--gold)]">
+        <span className="h-px w-12 bg-[linear-gradient(90deg,transparent,rgba(213,170,77,0.72))]" />
+        <span className="flex h-6 w-6 items-center justify-center rounded-full border border-[rgba(213,170,77,0.26)] bg-[rgba(213,170,77,0.06)]">
+          <span className="h-2 w-2 rounded-full border border-[rgba(213,170,77,0.9)]" />
         </span>
-        <span className="h-px w-20 bg-[linear-gradient(90deg,rgba(213,170,77,0.72),transparent)]" />
+        <span className="h-px w-12 bg-[linear-gradient(90deg,rgba(213,170,77,0.72),transparent)]" />
       </div>
-      <p className="mt-6 max-w-2xl text-base leading-8 text-[rgba(248,241,230,0.78)] md:text-lg">
-        From premium wines to immersive gaming and exciting events, FFSET Lounge delivers
-        unforgettable experiences with a richer sense of atmosphere than a typical business
-        showcase.
+      <p className="mt-4 max-w-2xl text-[0.85rem] leading-6 text-[rgba(248,241,230,0.78)] sm:text-[0.92rem] sm:leading-7 md:text-base">
+        Wine, snooker, console gaming, live events, and competitions — six experiences under one
+        roof in Akure.
       </p>
     </div>
   );
@@ -167,30 +174,30 @@ function SectionHeader() {
 
 function ManifestoBlock() {
   return (
-    <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-[2rem] border border-[rgba(213,170,77,0.14)] bg-[linear-gradient(180deg,rgba(20,15,14,0.94),rgba(11,9,10,0.98))] p-7 shadow-[0_24px_60px_rgba(0,0,0,0.16)] md:p-8 xl:min-h-[32rem]">
+    <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-[1.75rem] border border-[rgba(213,170,77,0.14)] bg-[linear-gradient(180deg,rgba(20,15,14,0.94),rgba(11,9,10,0.98))] p-5 shadow-[0_24px_60px_rgba(0,0,0,0.16)] md:p-6 xl:min-h-[28rem]">
       <div className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(213,170,77,0.45),transparent)]" />
       <div>
-        <p className="text-[0.72rem] uppercase tracking-[0.28em] text-[var(--gold)]">
-          Luxury Social Programming
+        <p className="text-[0.62rem] uppercase tracking-[0.24em] text-[var(--gold)]">
+          Inside The Lounge
         </p>
-        <h3 className="display-font mt-5 max-w-sm text-[2.15rem] leading-[1.04] text-white md:text-[2.55rem]">
-          A house for prestige pours, competition energy, and memorable nights.
+        <h3 className="display-font mt-3 max-w-sm text-[1.4rem] leading-[1.18] text-white sm:text-[1.6rem] md:text-[1.85rem]">
+          One address for wine nights, tournaments, and easy hangouts.
         </h3>
-        <p className="mt-5 max-w-md text-[0.98rem] leading-8 text-[var(--muted)]">
-          Every offering at FFSET Lounge is designed to feel polished and intentional. Guests move
-          between wine, gaming, events, and premium social moments inside one composed atmosphere.
+        <p className="mt-3 max-w-md text-[0.82rem] leading-6 text-[var(--muted)] sm:text-[0.88rem] sm:leading-7">
+          Come for a quiet drink, a competitive match, or a full night out with friends — the room
+          adapts to what you&rsquo;re there for.
         </p>
       </div>
-      <div className="mt-8 space-y-4 border-t border-white/8 pt-6">
+      <div className="mt-5 space-y-3 border-t border-white/8 pt-4">
         {services.slice(0, 4).map((service) => (
           <div key={service.title} className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-[0.67rem] uppercase tracking-[0.22em] text-[var(--gold)]">
+              <p className="text-[0.6rem] uppercase tracking-[0.2em] text-[var(--gold)]">
                 {service.accent}
               </p>
-              <p className="mt-1 text-sm leading-7 text-[rgba(248,241,230,0.86)]">{service.title}</p>
+              <p className="mt-1 text-[0.82rem] leading-6 text-[rgba(248,241,230,0.86)]">{service.title}</p>
             </div>
-            <span className="mt-2 h-px w-10 shrink-0 bg-[rgba(213,170,77,0.24)]" />
+            <span className="mt-2 h-px w-8 shrink-0 bg-[rgba(213,170,77,0.24)]" />
           </div>
         ))}
       </div>
@@ -212,7 +219,7 @@ function StoryPanel({
   service,
   className = "",
   aspectClassName = "aspect-[1.05/1]",
-  titleClassName = "text-[2rem] md:text-[2.2rem]",
+  titleClassName = "text-[1.35rem] sm:text-[1.55rem] md:text-[1.7rem]",
   descriptionClassName = "max-w-[30rem]",
   overlayClassName = "",
   priority = false,
@@ -237,27 +244,27 @@ function StoryPanel({
         />
       </div>
 
-      <div className="absolute inset-x-0 top-0 p-5 md:p-6">
-        <div className="flex h-15 w-15 items-center justify-center rounded-full border border-[rgba(213,170,77,0.3)] bg-[linear-gradient(180deg,rgba(52,40,28,0.62),rgba(26,20,15,0.32))] backdrop-blur-md">
+      <div className="absolute inset-x-0 top-0 p-3.5 md:p-5">
+        <div className="flex h-9 w-9 items-center justify-center rounded-full border border-[rgba(213,170,77,0.3)] bg-[linear-gradient(180deg,rgba(52,40,28,0.62),rgba(26,20,15,0.32))] backdrop-blur-md sm:h-10 sm:w-10">
           <ServiceIcon icon={service.icon} />
         </div>
       </div>
 
-      <div className="absolute inset-x-0 bottom-0 p-5 md:p-6">
-        <p className="text-[0.68rem] uppercase tracking-[0.28em] text-[var(--gold)]">
+      <div className="absolute inset-x-0 bottom-0 p-3.5 md:p-5">
+        <p className="text-[0.6rem] uppercase tracking-[0.22em] text-[var(--gold)]">
           {service.accent}
         </p>
-        <h3 className={`display-font mt-3 leading-tight text-white ${titleClassName}`.trim()}>
+        <h3 className={`display-font mt-1.5 leading-tight text-white ${titleClassName}`.trim()}>
           {service.title}
         </h3>
         <p
-          className={`mt-3 text-[0.98rem] leading-8 text-[rgba(248,241,230,0.82)] transition duration-300 group-hover:text-white ${descriptionClassName}`.trim()}
+          className={`mt-1.5 text-[0.78rem] leading-5 text-[rgba(248,241,230,0.82)] transition duration-300 group-hover:text-white sm:text-[0.85rem] sm:leading-6 ${descriptionClassName}`.trim()}
         >
           {service.description}
         </p>
         <Link
           href={service.href}
-          className="mt-5 inline-flex items-center gap-2 text-sm font-medium tracking-[0.04em] text-[var(--gold-soft)] transition duration-300 hover:text-white"
+          className="mt-2.5 inline-flex items-center gap-1.5 text-[0.78rem] font-medium tracking-[0.03em] text-[var(--gold-soft)] transition duration-300 hover:text-white"
         >
           <span>{service.cta}</span>
           <ArrowIcon />
@@ -269,20 +276,20 @@ function StoryPanel({
 
 function FeatureStrip() {
   return (
-    <div className="glass-panel grid gap-5 rounded-[2rem] border-[rgba(213,170,77,0.18)] bg-[linear-gradient(180deg,rgba(27,20,18,0.8),rgba(12,9,10,0.9))] p-6 md:grid-cols-2 md:gap-0 md:p-7 xl:grid-cols-4">
+    <div className="glass-panel grid gap-4 rounded-[1.75rem] border-[rgba(213,170,77,0.18)] bg-[linear-gradient(180deg,rgba(27,20,18,0.8),rgba(12,9,10,0.9))] p-5 md:grid-cols-2 md:gap-0 md:p-6 xl:grid-cols-4">
       {serviceHighlights.map((item, index) => (
         <div
           key={item.title}
-          className={`flex items-start gap-4 ${
-            index > 0 ? "md:border-l md:border-white/8 md:pl-6 xl:pl-8" : ""
-          } ${index < serviceHighlights.length - 1 ? "xl:pr-8" : ""}`}
+          className={`flex items-start gap-3 ${
+            index > 0 ? "md:border-l md:border-white/8 md:pl-5 xl:pl-6" : ""
+          } ${index < serviceHighlights.length - 1 ? "xl:pr-6" : ""}`}
         >
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-[rgba(213,170,77,0.26)] bg-[rgba(213,170,77,0.08)]">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[rgba(213,170,77,0.26)] bg-[rgba(213,170,77,0.08)]">
             <HighlightIcon icon={item.icon} />
           </div>
           <div>
-            <p className="text-lg font-medium text-[var(--gold-soft)]">{item.title}</p>
-            <p className="mt-1 text-sm leading-7 text-[var(--muted)]">{item.description}</p>
+            <p className="text-[0.92rem] font-medium text-[var(--gold-soft)]">{item.title}</p>
+            <p className="mt-1 text-[0.78rem] leading-5 text-[var(--muted)]">{item.description}</p>
           </div>
         </div>
       ))}
@@ -304,7 +311,7 @@ export function ServicesShowcase({ className = "" }: ServicesShowcaseProps) {
           <SectionHeader />
         </Reveal>
 
-        <div className="grid gap-6 xl:grid-cols-12">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5 xl:grid-cols-12 xl:gap-6">
           <Reveal className="xl:col-span-5 xl:h-full">
             <ManifestoBlock />
           </Reveal>
@@ -313,8 +320,8 @@ export function ServicesShowcase({ className = "" }: ServicesShowcaseProps) {
             <StoryPanel
               service={wine}
               className="h-full"
-              aspectClassName="aspect-[1.45/1] md:aspect-[1.7/1] xl:h-full xl:min-h-[32rem]"
-              titleClassName="text-[2.2rem] md:text-[2.8rem] xl:text-[3rem]"
+              aspectClassName="aspect-[1.25/1] md:aspect-[1.7/1] xl:h-full xl:min-h-[28rem]"
+              titleClassName="text-[1.55rem] sm:text-[1.75rem] md:text-[2.15rem] xl:text-[2.35rem]"
               descriptionClassName="max-w-[33rem]"
               priority
             />
@@ -323,8 +330,8 @@ export function ServicesShowcase({ className = "" }: ServicesShowcaseProps) {
           <Reveal delay={0.1} className="md:col-span-1 xl:col-span-6">
             <StoryPanel
               service={snooker}
-              aspectClassName="aspect-[1.08/1] md:aspect-[1.18/1] xl:aspect-[1.22/1]"
-              titleClassName="text-[2rem] md:text-[2.25rem]"
+              aspectClassName="aspect-[0.98/1] md:aspect-[1.18/1] xl:aspect-[1.22/1]"
+              titleClassName="text-[1.4rem] sm:text-[1.55rem] md:text-[1.75rem]"
               descriptionClassName="max-w-[24rem]"
             />
           </Reveal>
@@ -332,8 +339,8 @@ export function ServicesShowcase({ className = "" }: ServicesShowcaseProps) {
           <Reveal delay={0.14} className="md:col-span-1 xl:col-span-6">
             <StoryPanel
               service={gaming}
-              aspectClassName="aspect-[1.08/1] md:aspect-[1.18/1] xl:aspect-[1.22/1]"
-              titleClassName="text-[2rem] md:text-[2.25rem] xl:text-[2.35rem]"
+              aspectClassName="aspect-[0.98/1] md:aspect-[1.18/1] xl:aspect-[1.22/1]"
+              titleClassName="text-[1.4rem] sm:text-[1.55rem] md:text-[1.75rem] xl:text-[1.8rem]"
               descriptionClassName="max-w-[25rem]"
             />
           </Reveal>
@@ -341,8 +348,8 @@ export function ServicesShowcase({ className = "" }: ServicesShowcaseProps) {
           <Reveal delay={0.18} className="md:col-span-1 xl:col-span-4">
             <StoryPanel
               service={events}
-              aspectClassName="aspect-[1.02/1]"
-              titleClassName="text-[1.95rem] md:text-[2.1rem]"
+              aspectClassName="aspect-[0.92/1]"
+              titleClassName="text-[1.35rem] sm:text-[1.5rem] md:text-[1.6rem]"
               descriptionClassName="max-w-[22rem]"
             />
           </Reveal>
@@ -350,8 +357,8 @@ export function ServicesShowcase({ className = "" }: ServicesShowcaseProps) {
           <Reveal delay={0.22} className="md:col-span-1 xl:col-span-4">
             <StoryPanel
               service={competitions}
-              aspectClassName="aspect-[0.96/1]"
-              titleClassName="text-[1.95rem] md:text-[2.2rem]"
+              aspectClassName="aspect-[0.88/1]"
+              titleClassName="text-[1.35rem] sm:text-[1.5rem] md:text-[1.65rem]"
               descriptionClassName="max-w-[22rem]"
             />
           </Reveal>
@@ -359,14 +366,14 @@ export function ServicesShowcase({ className = "" }: ServicesShowcaseProps) {
           <Reveal delay={0.26} className="md:col-span-2 xl:col-span-4">
             <StoryPanel
               service={corporate}
-              aspectClassName="aspect-[1.12/1] md:aspect-[2.05/1] xl:aspect-[1.02/1]"
-              titleClassName="text-[1.95rem] md:text-[2.1rem]"
+              aspectClassName="aspect-[1/1] md:aspect-[2.05/1] xl:aspect-[1.02/1]"
+              titleClassName="text-[1.35rem] sm:text-[1.5rem] md:text-[1.6rem]"
               descriptionClassName="max-w-[24rem]"
             />
           </Reveal>
         </div>
 
-        <div className="mt-8 md:mt-10">
+        <div className="mt-5 md:mt-6">
           <Reveal delay={0.2}>
             <FeatureStrip />
           </Reveal>

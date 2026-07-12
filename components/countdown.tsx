@@ -7,17 +7,26 @@ function getCountdown(targetDate: string) {
   const safeDistance = Math.max(distance, 0);
 
   return {
-    days: Math.floor(safeDistance / (1000 * 60 * 60 * 24)),
-    hours: Math.floor((safeDistance / (1000 * 60 * 60)) % 24),
-    minutes: Math.floor((safeDistance / (1000 * 60)) % 60),
-    seconds: Math.floor((safeDistance / 1000) % 60),
+    d: Math.floor(safeDistance / (1000 * 60 * 60 * 24)),
+    h: Math.floor((safeDistance / (1000 * 60 * 60)) % 24),
+    m: Math.floor((safeDistance / (1000 * 60)) % 60),
+    s: Math.floor((safeDistance / 1000) % 60),
   };
 }
 
-export function Countdown({ targetDate }: { targetDate: string }) {
-  const [countdown, setCountdown] = useState(() => getCountdown(targetDate));
+type CountdownProps = {
+  targetDate: string;
+  compact?: boolean;
+};
+
+const initialCountdown = { d: 0, h: 0, m: 0, s: 0 };
+
+export function Countdown({ targetDate, compact = false }: CountdownProps) {
+  const [countdown, setCountdown] = useState(initialCountdown);
 
   useEffect(() => {
+    setCountdown(getCountdown(targetDate));
+
     const interval = window.setInterval(() => {
       setCountdown(getCountdown(targetDate));
     }, 1000);
@@ -25,12 +34,34 @@ export function Countdown({ targetDate }: { targetDate: string }) {
     return () => window.clearInterval(interval);
   }, [targetDate]);
 
+  if (compact) {
+    const entries = Object.entries(countdown);
+
+    return (
+      <div className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5">
+        {entries.map(([label, value], index) => (
+          <div key={label} className="flex items-baseline gap-2.5">
+            <span className="flex items-baseline gap-1">
+              <span className="display-font text-sm text-white sm:text-base">
+                {String(value).padStart(2, "0")}
+              </span>
+              <span className="text-[0.55rem] uppercase text-[var(--gold)]">{label}</span>
+            </span>
+            {index < entries.length - 1 ? <span className="text-white/15">:</span> : null}
+          </div>
+        ))}
+      </div>
+    );
+  }
+
   return (
-    <div className="grid gap-3 sm:grid-cols-4">
+    <div className="grid grid-cols-4 gap-2">
       {Object.entries(countdown).map(([label, value]) => (
-        <div key={label} className="rounded-[1.6rem] border border-white/7 bg-white/4 p-4 text-center">
-          <p className="display-font text-4xl text-white">{String(value).padStart(2, "0")}</p>
-          <p className="mt-2 text-xs uppercase tracking-[0.24em] text-[var(--gold)]">{label}</p>
+        <div key={label} className="rounded-[1.2rem] border border-white/7 bg-white/4 p-2.5 text-center sm:p-3">
+          <p className="display-font text-xl text-white sm:text-2xl">{String(value).padStart(2, "0")}</p>
+          <p className="mt-1 text-[0.55rem] uppercase tracking-[0.16em] text-[var(--gold)] sm:text-[0.6rem]">
+            {label}
+          </p>
         </div>
       ))}
     </div>
