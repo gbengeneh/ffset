@@ -1,4 +1,5 @@
 import { CompetitionRegisterForm } from "@/components/forms/competition-register-form";
+import { Countdown } from "@/components/countdown";
 import { PageSection, Panel } from "@/components/ui";
 import { competitionPaymentDetails } from "@/lib/site-data";
 
@@ -20,6 +21,12 @@ export default function CompetitionRegistrationPage() {
                 Complete your player details, make payment to the official account below, and
                 submit the form so the team can confirm your slot.
               </p>
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-2 pt-1">
+                <p className="text-[0.65rem] uppercase tracking-[0.16em] text-[var(--muted)]">
+                  August 28, 2026 • 6:00 PM • Akure
+                </p>
+                <Countdown targetDate="2026-08-28T18:00:00+01:00" compact />
+              </div>
             </Panel>
 
             <Panel className="space-y-3 p-5">

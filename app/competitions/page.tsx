@@ -36,9 +36,9 @@ export default function CompetitionsPage() {
 
               <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-2">
                 <p className="text-[0.65rem] uppercase tracking-[0.16em] text-[var(--muted)]">
-                  December 20, 2026 • 6:00 PM • Akure
+                  August 28, 2026 • 6:00 PM • Akure
                 </p>
-                <Countdown targetDate="2026-12-20T18:00:00+01:00" compact />
+                <Countdown targetDate="2026-08-28T18:00:00+01:00" compact />
               </div>
 
               <h1 className="display-font mt-3 max-w-[13ch] text-[1.7rem] leading-[1.05] text-white sm:text-[2.15rem] md:text-[2.6rem]">
