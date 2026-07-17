@@ -4,6 +4,18 @@ import { useState } from "react";
 import { SelectField, TextField } from "@/components/forms/fields";
 import { submitFormToTelegram } from "@/components/forms/telegram-submit";
 
+const REGISTRATION_CODE_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+function generateRegistrationCode() {
+  let code = "";
+
+  for (let i = 0; i < 6; i++) {
+    code += REGISTRATION_CODE_CHARS[Math.floor(Math.random() * REGISTRATION_CODE_CHARS.length)];
+  }
+
+  return `FFSET-${code}`;
+}
+
 type CompetitionRegisterFormProps = {
   onSuccess?: () => void;
 };
@@ -24,11 +36,13 @@ export function CompetitionRegisterForm({ onSuccess }: CompetitionRegisterFormPr
 
         const form = event.currentTarget;
         const formData = new FormData(form);
+        const code = generateRegistrationCode();
 
         try {
           await submitFormToTelegram({
             formType: "Competition Registration",
             fields: [
+              { label: "Registration Code", value: code },
               { label: "Full Name", value: formData.get("fullName") },
               { label: "Phone Number", value: formData.get("phone") },
               { label: "Email Address", value: formData.get("email") },
@@ -84,11 +98,18 @@ export function CompetitionRegisterForm({ onSuccess }: CompetitionRegisterFormPr
         <button type="submit" className="luxury-button luxury-button-primary text-[0.83rem]" disabled={submitting}>
           {submitting ? "Sending..." : "Submit Registration"}
         </button>
-        {submitted ? (
-          <p className="text-[0.83rem] text-[var(--gold-soft)]">Registration sent to Telegram successfully.</p>
-        ) : null}
         {error ? <p className="text-[0.83rem] text-[rgb(220,145,145)]">{error}</p> : null}
       </div>
+      {submitted ? (
+        <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-3.5">
+          <p className="text-[0.83rem] text-[var(--gold-soft)]">Registration received.</p>
+          <p className="mt-1.5 text-[0.78rem] leading-5 text-[var(--muted)]">
+            Your registration code will be sent to your WhatsApp number after your payment is
+            confirmed, within 24 hours. If you don&apos;t hear back within that time, please
+            message <span className="text-white">0906 770 4282</span>.
+          </p>
+        </div>
+      ) : null}
     </form>
   );
 }
