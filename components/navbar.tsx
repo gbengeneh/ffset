@@ -8,9 +8,9 @@ import {
   mobilePrimaryNavigation,
   navigation,
 } from "@/lib/site-data";
-import { ActionLink } from "@/components/ui";
 import { LogoMark } from "@/components/logo-mark";
 import { useRegisterModal } from "@/components/register-modal";
+import { useCart } from "@/lib/cart-context";
 
 function ArrowIcon() {
   return (
@@ -26,6 +26,25 @@ function ArrowIcon() {
     >
       <path d="M4.5 10h10" />
       <path d="m10.5 5 5 5-5 5" />
+    </svg>
+  );
+}
+
+function CartIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 20 20"
+      className="h-5 w-5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M3 4h1.5l1.2 8.4a1.5 1.5 0 0 0 1.49 1.3h6.62a1.5 1.5 0 0 0 1.48-1.24L16.5 7H5" />
+      <circle cx="8" cy="16.5" r="1" />
+      <circle cx="14" cy="16.5" r="1" />
     </svg>
   );
 }
@@ -53,6 +72,7 @@ export function Navbar() {
   const [experienceOpen, setExperienceOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { open: openRegisterModal } = useRegisterModal();
+  const { open: openCart, itemCount } = useCart();
 
   const experienceActive = experienceNavigation.some((item) => pathname === item.href);
 
@@ -244,6 +264,26 @@ export function Navbar() {
                 </li>
               );
             })}
+
+            <li className="pt-2 md:pt-0">
+              <button
+                type="button"
+                aria-label="Open cart"
+                className="relative flex h-11 w-full items-center justify-center gap-2 rounded-full border border-[var(--border)] bg-black/25 text-[var(--text)] transition hover:border-[rgba(213,170,77,0.34)] hover:bg-white/5 md:h-10 md:w-10"
+                onClick={() => {
+                  setOpen(false);
+                  openCart();
+                }}
+              >
+                <CartIcon />
+                <span className="md:hidden">Cart</span>
+                {itemCount > 0 ? (
+                  <span className="absolute -top-1.5 -right-1.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-[var(--gold)] px-1 text-[0.65rem] font-semibold text-black">
+                    {itemCount}
+                  </span>
+                ) : null}
+              </button>
+            </li>
 
             <li className="pt-2 md:pt-0 md:pl-3">
               <button

@@ -3,16 +3,17 @@ import { Countdown } from "@/components/countdown";
 import { Reveal } from "@/components/reveal";
 import { RegisterButton } from "@/components/register-button";
 import { ActionLink, PageSection, Panel } from "@/components/ui";
-import {
-  competitionPaymentDetails,
-  competitionRules,
-  leaderboard,
-} from "@/lib/site-data";
+import { formatNaira } from "@/lib/admin-types";
+import { getCompetitions } from "@/lib/public-api";
+import { bankTransferDetails, leaderboard } from "@/lib/site-data";
 
 const competitionHeroImage =
   "https://images.unsplash.com/photo-1558008258-3256797b43f3?auto=format&fit=crop&w=1600&q=80";
 
-export default function CompetitionsPage() {
+export default async function CompetitionsPage() {
+  const competitions = await getCompetitions();
+  const competition = competitions[0] ?? null;
+
   return (
     <>
       <section className="relative overflow-hidden">
@@ -42,7 +43,7 @@ export default function CompetitionsPage() {
               </div>
 
               <h1 className="display-font mt-3 max-w-[13ch] text-[1.7rem] leading-[1.05] text-white sm:text-[2.15rem] md:text-[2.6rem]">
-                FFSET FIFA Championship.
+                {competition ? `${competition.title}.` : "FFSET Championship."}
               </h1>
               <p className="mt-2.5 max-w-[32rem] text-[0.85rem] leading-6 text-[rgba(248,241,230,0.82)] sm:text-[0.92rem] sm:leading-7">
                 A focused cash-prize tournament with check-in, crowd energy, and a lounge
@@ -54,13 +55,17 @@ export default function CompetitionsPage() {
                   <p className="text-[0.58rem] uppercase tracking-[0.16em] text-[var(--gold)]">
                     Entry Fee
                   </p>
-                  <p className="mt-1 text-sm text-white sm:text-base">{competitionPaymentDetails.entryFee}</p>
+                  <p className="mt-1 text-sm text-white sm:text-base">
+                    {competition ? formatNaira(competition.entry_fee) : "—"}
+                  </p>
                 </div>
                 <div className="rounded-[1rem] border border-white/10 bg-white/[0.04] px-3 py-2.5">
                   <p className="text-[0.58rem] uppercase tracking-[0.16em] text-[var(--gold)]">
                     Top Prize
                   </p>
-                  <p className="mt-1 text-sm text-white sm:text-base">{competitionPaymentDetails.firstPrize}</p>
+                  <p className="mt-1 text-sm text-white sm:text-base">
+                    {competition ? formatNaira(competition.first_prize) : "—"}
+                  </p>
                 </div>
                 <div className="rounded-[1rem] border border-white/10 bg-white/[0.04] px-3 py-2.5">
                   <p className="text-[0.58rem] uppercase tracking-[0.16em] text-[var(--gold)]">
@@ -80,9 +85,9 @@ export default function CompetitionsPage() {
                   </ActionLink>
                 </div>
                 <p className="text-[0.72rem] text-[var(--muted)]">
-                  Pay to <span className="text-white">{competitionPaymentDetails.bankName}</span> —{" "}
-                  <span className="text-white">{competitionPaymentDetails.accountNumber}</span> (
-                  {competitionPaymentDetails.accountName})
+                  Pay to <span className="text-white">{bankTransferDetails.bankName}</span> —{" "}
+                  <span className="text-white">{bankTransferDetails.accountNumber}</span> (
+                  {bankTransferDetails.accountName})
                 </p>
               </div>
             </div>
@@ -97,9 +102,9 @@ export default function CompetitionsPage() {
               <p className="eyebrow text-[0.66rem]">Prize Breakdown</p>
               <div className="mt-3 grid gap-2 sm:grid-cols-3">
                 {[
-                  ["First Prize", competitionPaymentDetails.firstPrize],
-                  ["Second Prize", competitionPaymentDetails.secondPrize],
-                  ["Third Prize", competitionPaymentDetails.thirdPrize],
+                  ["First Prize", competition ? formatNaira(competition.first_prize) : "—"],
+                  ["Second Prize", competition ? formatNaira(competition.second_prize) : "—"],
+                  ["Third Prize", competition ? formatNaira(competition.third_prize) : "—"],
                 ].map(([label, value]) => (
                   <div key={label} className="rounded-[1.1rem] border border-white/8 bg-white/4 p-3">
                     <p className="text-[0.56rem] uppercase tracking-[0.16em] text-[var(--gold)]">{label}</p>
@@ -114,7 +119,7 @@ export default function CompetitionsPage() {
             <Panel className="p-4 sm:p-5">
               <p className="eyebrow text-[0.66rem]">Tournament Rules</p>
               <ul className="mt-3 space-y-2 text-[0.8rem] leading-5 text-[var(--muted)]">
-                {competitionRules.map((rule) => (
+                {(competition?.rules ?? []).map((rule) => (
                   <li key={rule} className="rounded-xl border border-white/7 bg-white/3 px-3 py-2">
                     {rule}
                   </li>

@@ -2,28 +2,64 @@
 
 import { useState } from "react";
 import { SelectField, TextField } from "@/components/forms/fields";
-import { submitFormToTelegram } from "@/components/forms/telegram-submit";
-
-const REGISTRATION_CODE_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-
-function generateRegistrationCode() {
-  let code = "";
-
-  for (let i = 0; i < 6; i++) {
-    code += REGISTRATION_CODE_CHARS[Math.floor(Math.random() * REGISTRATION_CODE_CHARS.length)];
-  }
-
-  return `FFSET-${code}`;
-}
+import { initializePayment } from "@/lib/payment";
+import { PublicApiError, submitPublicForm } from "@/lib/public-form";
+import { games } from "@/lib/site-data";
 
 type CompetitionRegisterFormProps = {
+  competitionId: number;
   onSuccess?: () => void;
 };
 
-export function CompetitionRegisterForm({ onSuccess }: CompetitionRegisterFormProps = {}) {
+type RegistrationResponse = {
+  sale_id: number | null;
+};
+
+export function CompetitionRegisterForm({ competitionId, onSuccess }: CompetitionRegisterFormProps) {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [saleId, setSaleId] = useState<number | null>(null);
+  const [email, setEmail] = useState("");
+  const [payingNow, setPayingNow] = useState(false);
+  const [payError, setPayError] = useState<string | null>(null);
+
+  if (submitted) {
+    return (
+      <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+        <p className="text-[0.9rem] text-[var(--gold-soft)]">Registration received.</p>
+        <p className="mt-1.5 text-[0.78rem] leading-5 text-[var(--muted)]">
+          Your slot will be confirmed once the team verifies your payment. If you don&apos;t hear back
+          within 24 hours, please message <span className="text-white">0906 770 4282</span>.
+        </p>
+        {saleId ? (
+          <div className="mt-3 flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              className="luxury-button luxury-button-primary text-[0.8rem]"
+              disabled={payingNow}
+              onClick={async () => {
+                setPayError(null);
+                setPayingNow(true);
+                try {
+                  const { authorization_url } = await initializePayment(saleId, email);
+                  window.location.href = authorization_url;
+                } catch (payingError) {
+                  setPayError(
+                    payingError instanceof PublicApiError ? payingError.message : "Could not start payment."
+                  );
+                  setPayingNow(false);
+                }
+              }}
+            >
+              {payingNow ? "Redirecting..." : "Pay Now with Card"}
+            </button>
+            {payError ? <p className="text-[0.78rem] text-[rgb(220,145,145)]">{payError}</p> : null}
+          </div>
+        ) : null}
+      </div>
+    );
+  }
 
   return (
     <form
@@ -31,34 +67,35 @@ export function CompetitionRegisterForm({ onSuccess }: CompetitionRegisterFormPr
       onSubmit={async (event) => {
         event.preventDefault();
         setError(null);
+        setPayError(null);
         setSubmitted(false);
         setSubmitting(true);
 
         const form = event.currentTarget;
         const formData = new FormData(form);
-        const code = generateRegistrationCode();
+        const submittedEmail = String(formData.get("email") ?? "");
 
         try {
-          await submitFormToTelegram({
-            formType: "Competition Registration",
-            fields: [
-              { label: "Registration Code", value: code },
-              { label: "Full Name", value: formData.get("fullName") },
-              { label: "Phone Number", value: formData.get("phone") },
-              { label: "Email Address", value: formData.get("email") },
-              { label: "Gamertag / Player Name", value: formData.get("gamerTag") },
-              { label: "Preferred Game", value: formData.get("preferredGame") },
-              { label: "State", value: formData.get("state") },
-              { label: "Payment Name", value: formData.get("paymentName") },
-            ],
-          });
+          const response = await submitPublicForm<RegistrationResponse>(
+            `/competitions/${competitionId}/register`,
+            {
+              name: formData.get("fullName"),
+              phone: formData.get("phone"),
+              email: submittedEmail,
+              gamertag: formData.get("gamerTag"),
+              game: formData.get("preferredGame"),
+              state: formData.get("state"),
+            }
+          );
 
           form.reset();
           setSubmitted(true);
+          setSaleId(response.sale_id);
+          setEmail(submittedEmail);
           onSuccess?.();
         } catch (submissionError) {
           setError(
-            submissionError instanceof Error
+            submissionError instanceof PublicApiError
               ? submissionError.message
               : "Competition registration failed."
           );
@@ -79,20 +116,10 @@ export function CompetitionRegisterForm({ onSuccess }: CompetitionRegisterFormPr
           required
           options={[
             { label: "Select preferred game", value: "" },
-            { label: "EA FC / FIFA", value: "ea-fc" },
-            { label: "Mortal Kombat", value: "mortal-kombat" },
-            { label: "Call of Duty", value: "call-of-duty" },
-            { label: "NBA 2K", value: "nba-2k" },
+            ...games.map((game) => ({ label: game, value: game })),
           ]}
         />
         <TextField label="State" name="state" placeholder="Ondo" autoComplete="address-level1" required />
-        <TextField
-          label="Payment Name"
-          name="paymentName"
-          placeholder="Name used for bank transfer"
-          minLength={2}
-          required
-        />
       </div>
       <div className="flex flex-wrap items-center gap-3.5 pt-1">
         <button type="submit" className="luxury-button luxury-button-primary text-[0.83rem]" disabled={submitting}>
@@ -100,16 +127,6 @@ export function CompetitionRegisterForm({ onSuccess }: CompetitionRegisterFormPr
         </button>
         {error ? <p className="text-[0.83rem] text-[rgb(220,145,145)]">{error}</p> : null}
       </div>
-      {submitted ? (
-        <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-3.5">
-          <p className="text-[0.83rem] text-[var(--gold-soft)]">Registration received.</p>
-          <p className="mt-1.5 text-[0.78rem] leading-5 text-[var(--muted)]">
-            Your registration code will be sent to your WhatsApp number after your payment is
-            confirmed, within 24 hours. If you don&apos;t hear back within that time, please
-            message <span className="text-white">0906 770 4282</span>.
-          </p>
-        </div>
-      ) : null}
     </form>
   );
 }

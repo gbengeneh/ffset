@@ -29,12 +29,12 @@ type TextFieldProps = {
   hint?: string;
 } & InputHTMLAttributes<HTMLInputElement>;
 
-export function TextField({ label, hint, id, ...props }: TextFieldProps) {
+export function TextField({ label, hint, id, className, ...props }: TextFieldProps) {
   const fieldId = id ?? String(props.name ?? label).toLowerCase().replace(/\s+/g, "-");
 
   return (
     <FieldShell label={label} htmlFor={fieldId} hint={hint}>
-      <input id={fieldId} className="form-input" {...props} />
+      <input id={fieldId} className={`form-input ${className ?? ""}`.trim()} {...props} />
     </FieldShell>
   );
 }
@@ -44,12 +44,12 @@ type TextAreaFieldProps = {
   hint?: string;
 } & TextareaHTMLAttributes<HTMLTextAreaElement>;
 
-export function TextAreaField({ label, hint, id, ...props }: TextAreaFieldProps) {
+export function TextAreaField({ label, hint, id, className, ...props }: TextAreaFieldProps) {
   const fieldId = id ?? String(props.name ?? label).toLowerCase().replace(/\s+/g, "-");
 
   return (
     <FieldShell label={label} htmlFor={fieldId} hint={hint}>
-      <textarea id={fieldId} className="form-input" {...props} />
+      <textarea id={fieldId} className={`form-input ${className ?? ""}`.trim()} {...props} />
     </FieldShell>
   );
 }
@@ -65,13 +65,14 @@ export function SelectField({
   hint,
   id,
   options,
+  className,
   ...props
 }: SelectFieldProps) {
   const fieldId = id ?? String(props.name ?? label).toLowerCase().replace(/\s+/g, "-");
 
   return (
     <FieldShell label={label} htmlFor={fieldId} hint={hint}>
-      <select id={fieldId} className="form-input" {...props}>
+      <select id={fieldId} className={`form-input ${className ?? ""}`.trim()} {...props}>
         {options.map((option) => (
           <option key={option.value} value={option.value} disabled={option.value === ""}>
             {option.label}

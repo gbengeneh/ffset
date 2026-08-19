@@ -1,9 +1,14 @@
+import { AddToCartButton } from "@/components/add-to-cart-button";
 import { PageHero } from "@/components/page-hero";
 import { Reveal } from "@/components/reveal";
 import { PageSection, Panel } from "@/components/ui";
-import { games, gamingPackages } from "@/lib/site-data";
+import { getProducts } from "@/lib/public-api";
+import { formatPackagePrice } from "@/lib/public-mappers";
+import { games } from "@/lib/site-data";
 
-export default function GamingPage() {
+export default async function GamingPage() {
+  const gamingPackages = await getProducts("gaming_package");
+
   return (
     <>
       <PageHero
@@ -26,11 +31,24 @@ export default function GamingPage() {
         </Reveal>
         <div className="grid gap-6">
           {gamingPackages.map((item, index) => (
-            <Reveal key={item.name} delay={index * 0.08}>
+            <Reveal key={item.id} delay={index * 0.08}>
               <Panel>
-                <p className="eyebrow">{item.price}</p>
+                <p className="eyebrow">{formatPackagePrice(item)}</p>
                 <h2 className="display-font mt-4 text-3xl text-white">{item.name}</h2>
                 <p className="mt-4 text-sm leading-8 text-[var(--muted)]">{item.description}</p>
+                {item.status === "active" ? (
+                  <div className="mt-5">
+                    <AddToCartButton
+                      item={{
+                        productId: item.id,
+                        name: item.name,
+                        price: item.price,
+                        imageUrl: item.image_url ?? undefined,
+                        type: "gaming_package",
+                      }}
+                    />
+                  </div>
+                ) : null}
               </Panel>
             </Reveal>
           ))}

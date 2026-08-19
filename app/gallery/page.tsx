@@ -1,9 +1,12 @@
 import { GalleryGrid } from "@/components/gallery-grid";
 import { PageHero } from "@/components/page-hero";
 import { PageSection } from "@/components/ui";
-import { galleryItems } from "@/lib/site-data";
+import { getGallery } from "@/lib/public-api";
+import { toGalleryItemProps } from "@/lib/public-mappers";
 
-export default function GalleryPage() {
+export default async function GalleryPage() {
+  const items = await getGallery();
+
   return (
     <>
       <PageHero
@@ -12,7 +15,7 @@ export default function GalleryPage() {
         description="Wine nights, snooker tables, packages, and moments from real visits — tap any tile for a closer look."
       />
       <PageSection>
-        <GalleryGrid items={galleryItems} />
+        <GalleryGrid items={items.map(toGalleryItemProps)} />
       </PageSection>
     </>
   );

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { TextAreaField, TextField } from "@/components/forms/fields";
-import { submitFormToTelegram } from "@/components/forms/telegram-submit";
+import { PublicApiError, submitPublicForm } from "@/lib/public-form";
 import { Panel } from "@/components/ui";
 
 export function BookingForm() {
@@ -23,24 +23,21 @@ export function BookingForm() {
         const formData = new FormData(form);
 
         try {
-          await submitFormToTelegram({
-            formType: "Booking Request",
-            fields: [
-              { label: "Full Name", value: formData.get("fullName") },
-              { label: "Phone Number", value: formData.get("phone") },
-              { label: "Date", value: formData.get("date") },
-              { label: "Time", value: formData.get("time") },
-              { label: "Number of Guests", value: formData.get("guests") },
-              { label: "Occasion", value: formData.get("occasion") },
-              { label: "Special Request", value: formData.get("specialRequest") },
-            ],
+          await submitPublicForm("/bookings", {
+            name: formData.get("fullName"),
+            phone: formData.get("phone"),
+            date: formData.get("date"),
+            time: formData.get("time"),
+            guests: Number(formData.get("guests")),
+            occasion: formData.get("occasion") || null,
+            special_request: formData.get("specialRequest") || null,
           });
 
           form.reset();
           setSubmitted(true);
         } catch (submissionError) {
           setError(
-            submissionError instanceof Error
+            submissionError instanceof PublicApiError
               ? submissionError.message
               : "Booking submission failed."
           );
@@ -63,7 +60,7 @@ export function BookingForm() {
           <button type="submit" className="luxury-button luxury-button-primary" disabled={submitting}>
             {submitting ? "Sending..." : "Reserve Table"}
           </button>
-          {submitted ? <p className="text-sm text-[var(--gold-soft)]">Reservation request sent to Telegram successfully.</p> : null}
+          {submitted ? <p className="text-sm text-[var(--gold-soft)]">Reservation request received — the team will confirm shortly.</p> : null}
           {error ? <p className="text-sm text-[rgb(220,145,145)]">{error}</p> : null}
         </div>
       </Panel>

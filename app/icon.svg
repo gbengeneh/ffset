@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="FFSET Lounge">
+  <defs>
+    <radialGradient id="logo-mark-bg" cx="50%" cy="36%" r="78%">
+      <stop offset="0%" stop-color="#1e1416" />
+      <stop offset="100%" stop-color="#0a0708" />
+    </radialGradient>
+    <linearGradient id="logo-mark-mono" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f1d191" />
+      <stop offset="55%" stop-color="#d5aa4d" />
+      <stop offset="100%" stop-color="#ab3f59" />
+    </linearGradient>
+  </defs>
+
+  <rect width="64" height="64" rx="14" fill="url(#logo-mark-bg)" />
+  <circle cx="32" cy="32" r="29.5" fill="none" stroke="rgba(213,170,77,0.4)" stroke-width="1" />
+
+  <text
+    x="32"
+    y="39.5"
+    text-anchor="middle"
+    font-family="'Iowan Old Style','Palatino Linotype','Book Antiqua',Georgia,serif"
+    font-weight="700"
+    font-size="28"
+    letter-spacing="-1.5"
+    fill="url(#logo-mark-mono)"
+  >FF</text>
+
+  <path d="M21 46.5 H43" stroke="rgba(213,170,77,0.55)" stroke-width="1" stroke-linecap="round" />
+</svg>

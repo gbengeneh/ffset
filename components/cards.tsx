@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { AddToCartButton } from "@/components/add-to-cart-button";
 import { contactDetails } from "@/lib/site-data";
 import { ActionLink, Panel } from "@/components/ui";
 
@@ -34,21 +35,31 @@ function buildWineWhatsAppHref({
 }
 
 type WineCardProps = {
+  id: number;
   name: string;
   category: string;
   description: string;
   size: string;
   availability: string;
+  price: string;
+  rawPrice: string;
   imageUrl?: string;
+  isPurchasable: boolean;
+  stockQuantity: number | null;
 };
 
 export function WineCard({
+  id,
   name,
   category,
   description,
   size,
   availability,
+  price,
+  rawPrice,
   imageUrl,
+  isPurchasable,
+  stockQuantity,
 }: WineCardProps) {
   const isRemoteImage = Boolean(imageUrl?.startsWith("http"));
   const wineWhatsAppHref = buildWineWhatsAppHref({
@@ -85,9 +96,25 @@ export function WineCard({
         </span>
       </div>
       <p className="mb-3 text-[0.82rem] leading-6 text-[var(--muted)] sm:text-sm sm:leading-7">{description}</p>
-      <div className="mt-auto flex flex-col items-start justify-between gap-3 pt-4 text-sm text-[var(--muted)] sm:flex-row sm:items-center">
-        <span>{size}</span>
-        <ActionLink href={wineWhatsAppHref} className="px-4 py-3 text-xs">
+      <div className="mb-3 flex items-center justify-between gap-4 text-sm">
+        <span className="text-[var(--muted)]">{size}</span>
+        <span className="display-font text-lg text-[var(--gold)]">{price}</span>
+      </div>
+      <div className="mt-auto space-y-2 pt-1">
+        {isPurchasable ? (
+          <AddToCartButton
+            className="w-full justify-center"
+            item={{
+              productId: id,
+              name,
+              price: rawPrice,
+              imageUrl,
+              type: "wine",
+              maxQuantity: stockQuantity ?? undefined,
+            }}
+          />
+        ) : null}
+        <ActionLink href={wineWhatsAppHref} className="w-full justify-center px-4 py-3 text-xs">
           Reserve / Enquire on WhatsApp
         </ActionLink>
       </div>

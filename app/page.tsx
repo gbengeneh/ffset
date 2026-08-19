@@ -7,7 +7,10 @@ import { ServicesShowcase } from "@/components/services-showcase";
 import { SectionTitle } from "@/components/section-title";
 import { RegisterButton } from "@/components/register-button";
 import { ActionLink, PageSection, Panel } from "@/components/ui";
-import { contactDetails, events, galleryItems, wines } from "@/lib/site-data";
+import { formatNaira } from "@/lib/admin-types";
+import { getCompetitions, getEvents, getGallery, getProducts } from "@/lib/public-api";
+import { toWineCardProps } from "@/lib/public-mappers";
+import { contactDetails } from "@/lib/site-data";
 
 type HeroHighlight = {
   label: string;
@@ -109,7 +112,15 @@ function HeroHighlightChip({ label, value, icon }: Pick<HeroHighlight, "label" |
   );
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [wines, events, galleryItems, competitions] = await Promise.all([
+    getProducts("wine"),
+    getEvents(),
+    getGallery(),
+    getCompetitions(),
+  ]);
+  const competition = competitions[0] ?? null;
+
   return (
     <>
       <section className="relative overflow-hidden">
@@ -199,7 +210,11 @@ export default function HomePage() {
 
       <PageSection className="section-space pt-0" containerClassName="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
         <Reveal>
-          <CompetitionCard title="FFSET FIFA Championship" fee="₦5,000" prize="₦100,000" />
+          <CompetitionCard
+            title={competition?.title ?? "FFSET FIFA Championship"}
+            fee={competition ? formatNaira(competition.entry_fee) : "₦5,000"}
+            prize={competition ? formatNaira(competition.first_prize) : "₦100,000"}
+          />
         </Reveal>
         <Reveal delay={0.12}>
           <Panel>
@@ -231,8 +246,8 @@ export default function HomePage() {
         />
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {wines.slice(0, 3).map((wine, index) => (
-            <Reveal key={wine.name} delay={index * 0.08}>
-              <WineCard {...wine} />
+            <Reveal key={wine.id} delay={index * 0.08}>
+              <WineCard {...toWineCardProps(wine)} />
             </Reveal>
           ))}
         </div>
@@ -246,14 +261,14 @@ export default function HomePage() {
         />
         <div className="grid gap-6 lg:grid-cols-3">
           {galleryItems.slice(0, 3).map((item, index) => (
-            <Reveal key={item.title} delay={index * 0.08}>
+            <Reveal key={item.id} delay={index * 0.08}>
               <article className="overflow-hidden rounded-[1.75rem] border border-[rgba(213,170,77,0.12)] bg-[rgba(12,9,10,0.92)] shadow-[0_24px_60px_rgba(0,0,0,0.18)]">
                 <div className="relative aspect-[4/3]">
                   {item.type === "video" ? (
                     <LazyVideo
                       className="h-full w-full object-cover"
                       src={item.src}
-                      poster={item.poster}
+                      poster={item.poster ?? undefined}
                       autoPlay
                       muted
                       loop
@@ -301,7 +316,7 @@ export default function HomePage() {
           <Panel>
             <div className="grid gap-6 md:grid-cols-2">
               {events.slice(0, 2).map((event) => (
-                <EventCard key={event.title} {...event} />
+                <EventCard key={event.id} title={event.title} date={event.date} description={event.description ?? ""} />
               ))}
             </div>
           </Panel>

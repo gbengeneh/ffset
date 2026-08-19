@@ -2,9 +2,13 @@ import { WineCard } from "@/components/cards";
 import { PageHero } from "@/components/page-hero";
 import { Reveal } from "@/components/reveal";
 import { PageSection } from "@/components/ui";
-import { contactDetails, wines } from "@/lib/site-data";
+import { toWineCardProps } from "@/lib/public-mappers";
+import { getProducts } from "@/lib/public-api";
+import { contactDetails } from "@/lib/site-data";
 
-export default function WinesPage() {
+export default async function WinesPage() {
+  const products = await getProducts("wine");
+
   return (
     <>
       <PageHero
@@ -14,9 +18,9 @@ export default function WinesPage() {
         primaryCta={{ label: "Reserve on WhatsApp", href: contactDetails.whatsapp }}
       />
       <PageSection containerClassName="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-        {wines.map((wine, index) => (
-          <Reveal key={wine.name} delay={index * 0.06}>
-            <WineCard {...wine} />
+        {products.map((product, index) => (
+          <Reveal key={product.id} delay={index * 0.06}>
+            <WineCard {...toWineCardProps(product)} />
           </Reveal>
         ))}
       </PageSection>

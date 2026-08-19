@@ -25,13 +25,18 @@ export function Countdown({ targetDate, compact = false }: CountdownProps) {
   const [countdown, setCountdown] = useState(initialCountdown);
 
   useEffect(() => {
-    setCountdown(getCountdown(targetDate));
+    const initialTimer = window.setTimeout(() => {
+      setCountdown(getCountdown(targetDate));
+    }, 0);
 
     const interval = window.setInterval(() => {
       setCountdown(getCountdown(targetDate));
     }, 1000);
 
-    return () => window.clearInterval(interval);
+    return () => {
+      window.clearTimeout(initialTimer);
+      window.clearInterval(interval);
+    };
   }, [targetDate]);
 
   if (compact) {

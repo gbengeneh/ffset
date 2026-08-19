@@ -2,9 +2,13 @@ import { EventStoryCard } from "@/components/event-story-card";
 import { PageHero } from "@/components/page-hero";
 import { Reveal } from "@/components/reveal";
 import { ActionLink, PageSection, Panel } from "@/components/ui";
-import { contactDetails, events } from "@/lib/site-data";
+import { getEvents } from "@/lib/public-api";
+import { toEventCardProps } from "@/lib/public-mappers";
+import { contactDetails } from "@/lib/site-data";
 
-export default function EventsPage() {
+export default async function EventsPage() {
+  const events = await getEvents();
+
   return (
     <>
       <PageHero
@@ -15,8 +19,8 @@ export default function EventsPage() {
 
       <PageSection containerClassName="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
         {events.map((event, index) => (
-          <Reveal key={event.title} delay={index * 0.06}>
-            <EventStoryCard {...event} />
+          <Reveal key={event.id} delay={index * 0.06}>
+            <EventStoryCard {...toEventCardProps(event)} />
           </Reveal>
         ))}
       </PageSection>

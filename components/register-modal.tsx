@@ -11,11 +11,13 @@ import {
 } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CompetitionRegisterForm } from "@/components/forms/competition-register-form";
-import { competitionPaymentDetails } from "@/lib/site-data";
+import { formatNaira, type Competition } from "@/lib/admin-types";
+import { bankTransferDetails } from "@/lib/site-data";
 
 type RegisterModalContextValue = {
   open: () => void;
   close: () => void;
+  competition: Competition | null;
 };
 
 const RegisterModalContext = createContext<RegisterModalContextValue | null>(null);
@@ -46,12 +48,18 @@ function CloseIcon() {
   );
 }
 
-export function RegisterModalProvider({ children }: { children: ReactNode }) {
+export function RegisterModalProvider({
+  children,
+  competition = null,
+}: {
+  children: ReactNode;
+  competition?: Competition | null;
+}) {
   const [isOpen, setIsOpen] = useState(false);
 
   const open = useCallback(() => setIsOpen(true), []);
   const close = useCallback(() => setIsOpen(false), []);
-  const value = useMemo(() => ({ open, close }), [open, close]);
+  const value = useMemo(() => ({ open, close, competition }), [open, close, competition]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -109,19 +117,28 @@ export function RegisterModalProvider({ children }: { children: ReactNode }) {
 
               <p className="eyebrow text-[0.6rem]">Compete at FFSET</p>
               <h2 className="display-font mt-2 pr-8 text-[1.3rem] leading-[1.12] text-white sm:text-[1.5rem]">
-                Register for the FIFA Championship
+                {competition ? `Register for the ${competition.title}` : "Registration"}
               </h2>
-              <p className="mt-2 text-[0.78rem] leading-5 text-[var(--muted)]">
-                Entry is {competitionPaymentDetails.entryFee}, paid to{" "}
-                <span className="text-white">{competitionPaymentDetails.bankName}</span>,{" "}
-                <span className="text-white">{competitionPaymentDetails.accountNumber}</span> (
-                {competitionPaymentDetails.accountName}). Submit your details below once you&apos;ve
-                paid.
-              </p>
 
-              <div className="mt-4 max-h-[65vh] overflow-y-auto pr-1">
-                <CompetitionRegisterForm />
-              </div>
+              {competition ? (
+                <>
+                  <p className="mt-2 text-[0.78rem] leading-5 text-[var(--muted)]">
+                    Entry is {formatNaira(competition.entry_fee)}, paid to{" "}
+                    <span className="text-white">{bankTransferDetails.bankName}</span>,{" "}
+                    <span className="text-white">{bankTransferDetails.accountNumber}</span> (
+                    {bankTransferDetails.accountName}). Submit your details below once you&apos;ve
+                    paid.
+                  </p>
+
+                  <div className="mt-4 max-h-[65vh] overflow-y-auto pr-1">
+                    <CompetitionRegisterForm competitionId={competition.id} />
+                  </div>
+                </>
+              ) : (
+                <p className="mt-2 text-[0.78rem] leading-5 text-[var(--muted)]">
+                  No competitions are open for registration right now — check back soon.
+                </p>
+              )}
             </motion.div>
           </motion.div>
         ) : null}

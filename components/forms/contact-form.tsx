@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { TextAreaField, TextField } from "@/components/forms/fields";
-import { submitFormToTelegram } from "@/components/forms/telegram-submit";
+import { PublicApiError, submitPublicForm } from "@/lib/public-form";
 import { Panel } from "@/components/ui";
 
 export function ContactForm() {
@@ -21,23 +21,21 @@ export function ContactForm() {
 
         const form = event.currentTarget;
         const formData = new FormData(form);
+        const phone = String(formData.get("phone") ?? "").trim();
+        const message = String(formData.get("message") ?? "");
 
         try {
-          await submitFormToTelegram({
-            formType: "Contact Message",
-            fields: [
-              { label: "Full Name", value: formData.get("fullName") },
-              { label: "Email Address", value: formData.get("email") },
-              { label: "Phone Number", value: formData.get("phone") },
-              { label: "Message", value: formData.get("message") },
-            ],
+          await submitPublicForm("/contact", {
+            name: formData.get("fullName"),
+            email: formData.get("email"),
+            message: phone ? `Phone: ${phone}\n\n${message}` : message,
           });
 
           form.reset();
           setSubmitted(true);
         } catch (submissionError) {
           setError(
-            submissionError instanceof Error
+            submissionError instanceof PublicApiError
               ? submissionError.message
               : "Contact submission failed."
           );
@@ -57,7 +55,7 @@ export function ContactForm() {
           <button type="submit" className="luxury-button luxury-button-primary" disabled={submitting}>
             {submitting ? "Sending..." : "Send Message"}
           </button>
-          {submitted ? <p className="text-sm text-[var(--gold-soft)]">Message sent to Telegram successfully.</p> : null}
+          {submitted ? <p className="text-sm text-[var(--gold-soft)]">Message sent — the team will get back to you shortly.</p> : null}
           {error ? <p className="text-sm text-[rgb(220,145,145)]">{error}</p> : null}
         </div>
       </Panel>

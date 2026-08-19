@@ -1,9 +1,14 @@
 import { CompetitionRegisterForm } from "@/components/forms/competition-register-form";
 import { Countdown } from "@/components/countdown";
 import { PageSection, Panel } from "@/components/ui";
-import { competitionPaymentDetails } from "@/lib/site-data";
+import { formatNaira } from "@/lib/admin-types";
+import { getCompetitions } from "@/lib/public-api";
+import { bankTransferDetails } from "@/lib/site-data";
 
-export default function CompetitionRegistrationPage() {
+export default async function CompetitionRegistrationPage() {
+  const competitions = await getCompetitions();
+  const competition = competitions[0] ?? null;
+
   return (
     <>
       <section className="relative overflow-hidden">
@@ -15,7 +20,7 @@ export default function CompetitionRegistrationPage() {
             <Panel className="space-y-3 p-5">
               <p className="eyebrow text-[0.68rem]">Register</p>
               <h1 className="display-font text-[1.6rem] leading-[1.08] text-white sm:text-[2rem]">
-                Secure your slot for the next FFSET championship.
+                {competition ? `Secure your slot for the ${competition.title}.` : "Registration is not open right now."}
               </h1>
               <p className="text-[0.85rem] leading-6 text-[var(--muted)] sm:text-[0.9rem] sm:leading-7">
                 Complete your player details, make payment to the official account below, and
@@ -34,19 +39,21 @@ export default function CompetitionRegistrationPage() {
               <div className="grid gap-2.5 sm:grid-cols-2">
                 <div className="rounded-[1.15rem] border border-white/8 bg-white/[0.03] p-3.5">
                   <p className="text-[0.6rem] uppercase tracking-[0.18em] text-[var(--gold)]">Bank</p>
-                  <p className="mt-1.5 text-base text-white">{competitionPaymentDetails.bankName}</p>
+                  <p className="mt-1.5 text-base text-white">{bankTransferDetails.bankName}</p>
                 </div>
                 <div className="rounded-[1.15rem] border border-white/8 bg-white/[0.03] p-3.5">
                   <p className="text-[0.6rem] uppercase tracking-[0.18em] text-[var(--gold)]">Entry Fee</p>
-                  <p className="mt-1.5 text-base text-white">{competitionPaymentDetails.entryFee}</p>
+                  <p className="mt-1.5 text-base text-white">
+                    {competition ? formatNaira(competition.entry_fee) : "—"}
+                  </p>
                 </div>
                 <div className="rounded-[1.15rem] border border-white/8 bg-white/[0.03] p-3.5">
                   <p className="text-[0.6rem] uppercase tracking-[0.18em] text-[var(--gold)]">Account Number</p>
-                  <p className="mt-1.5 text-base text-white">{competitionPaymentDetails.accountNumber}</p>
+                  <p className="mt-1.5 text-base text-white">{bankTransferDetails.accountNumber}</p>
                 </div>
                 <div className="rounded-[1.15rem] border border-white/8 bg-white/[0.03] p-3.5">
                   <p className="text-[0.6rem] uppercase tracking-[0.18em] text-[var(--gold)]">Account Name</p>
-                  <p className="mt-1.5 text-base text-white">{competitionPaymentDetails.accountName}</p>
+                  <p className="mt-1.5 text-base text-white">{bankTransferDetails.accountName}</p>
                 </div>
               </div>
             </Panel>
@@ -58,7 +65,13 @@ export default function CompetitionRegistrationPage() {
         <Panel className="p-5">
           <p className="eyebrow text-[0.68rem]">Player Details</p>
           <div className="mt-4">
-            <CompetitionRegisterForm />
+            {competition ? (
+              <CompetitionRegisterForm competitionId={competition.id} />
+            ) : (
+              <p className="text-sm text-[var(--muted)]">
+                There are no competitions open for registration right now — check back soon.
+              </p>
+            )}
           </div>
         </Panel>
       </PageSection>

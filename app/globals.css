@@ -183,6 +183,20 @@
     color: rgba(248, 241, 230, 0.42);
   }
 
+  select.form-input {
+    color: var(--text);
+    color-scheme: dark;
+  }
+
+  select.form-input option {
+    background: #171011;
+    color: #f8f1e6;
+  }
+
+  select.form-input option:disabled {
+    color: #8f8376;
+  }
+
   .form-input:focus {
     border-color: rgba(213, 170, 77, 0.55);
     box-shadow: 0 0 0 4px rgba(213, 170, 77, 0.08);
@@ -255,5 +269,63 @@
 
   50% {
     transform: translateY(-8px);
+  }
+}
+
+@media print {
+  @page {
+    size: 80mm auto;
+    margin: 0;
+  }
+
+  body * {
+    visibility: hidden !important;
+  }
+
+  .receipt-overlay,
+  .receipt-dialog,
+  .receipt-scroll,
+  .receipt-print-root,
+  .receipt-print-root * {
+    visibility: visible !important;
+  }
+
+  .receipt-actions {
+    display: none !important;
+  }
+
+  .receipt-overlay {
+    position: absolute !important;
+    inset: 0 auto auto 0 !important;
+    width: 80mm !important;
+    max-width: 80mm !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: white !important;
+    box-shadow: none !important;
+  }
+
+  .receipt-dialog,
+  .receipt-scroll {
+    position: static !important;
+    width: 80mm !important;
+    max-width: 80mm !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: white !important;
+    box-shadow: none !important;
+  }
+
+  .receipt-print-root {
+    width: 80mm !important;
+    min-height: 0 !important;
+    padding: 8mm 6mm !important;
+    color: #000 !important;
   }
 }
