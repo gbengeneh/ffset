@@ -19,24 +19,34 @@ import {
   SuppliersIcon,
 } from "@/components/admin/icons";
 
-const links = [
+const sections = [
+  { label: "Overview", links: [
   { href: "/admin", label: "Dashboard", icon: DashboardIcon },
-  { href: "/admin/products", label: "Products", icon: ProductsIcon },
-  { href: "/admin/orders", label: "Orders", icon: OrdersIcon },
+  ] },
+  { label: "In-Shop", description: "Lounge stock and sales", links: [
+  { href: "/admin/products", label: "In-Shop Products", icon: ProductsIcon },
+  { href: "/admin/orders", label: "In-Shop Orders", icon: OrdersIcon },
   { href: "/admin/purchases", label: "Purchases", icon: PurchasesIcon },
   { href: "/admin/suppliers", label: "Suppliers", icon: SuppliersIcon },
-  { href: "/admin/cars", label: "Cars", icon: CarsIcon },
-  { href: "/admin/marketplace", label: "Marketplace", icon: ProductsIcon },
-  { href: "/admin/marketplace-orders", label: "Store Orders", icon: OrdersIcon },
+  ] },
+  { label: "Marketplace", description: "Online listings and fulfilment", links: [
+  { href: "/admin/marketplace", label: "Listings", icon: ProductsIcon },
+  { href: "/admin/marketplace-orders", label: "Marketplace Orders", icon: OrdersIcon },
   { href: "/admin/delivery-zones", label: "Delivery Zones", icon: OrdersIcon },
+  { href: "/admin/cars", label: "Cars", icon: CarsIcon },
   { href: "/admin/car-orders", label: "Car Orders", icon: CarOrdersIcon },
+  ] },
+  { label: "Experiences", links: [
   { href: "/admin/events", label: "Events", icon: EventsIcon },
   { href: "/admin/competitions", label: "Competitions", icon: CompetitionsIcon },
   { href: "/admin/competition-registrations", label: "Registrations", icon: RegistrationsIcon },
   { href: "/admin/bookings", label: "Bookings", icon: BookingsIcon },
+  ] },
+  { label: "Administration", links: [
   { href: "/admin/gallery", label: "Gallery", icon: GalleryIcon },
   { href: "/admin/messages", label: "Messages", icon: MessagesIcon },
   { href: "/admin/staff", label: "Staff", icon: StaffIcon },
+  ] },
 ];
 
 export const ADMIN_SIDEBAR_WIDTH = "w-64";
@@ -57,27 +67,43 @@ function SidebarBrand() {
 
 function SidebarLinks({ pathname, onNavigate }: { pathname: string; onNavigate?: () => void }) {
   return (
-    <nav className="flex flex-col gap-0.5">
-      {links.map((link) => {
-        const active = link.href === "/admin" ? pathname === "/admin" : pathname.startsWith(link.href);
-        const Icon = link.icon;
+    <nav aria-label="Admin navigation" className="flex flex-col gap-5 pb-4">
+      {sections.map((section) => {
+        const headingId = `sidebar-${section.label.toLowerCase().replaceAll(" ", "-")}`;
         return (
-          <Link
-            key={link.href}
-            href={link.href}
-            onClick={onNavigate}
-            className={`relative flex items-center gap-3 rounded-lg px-3.5 py-2.5 text-sm tracking-[0.01em] transition ${
-              active
-                ? "bg-white/[0.06] text-[var(--gold-soft)]"
-                : "text-[var(--muted)] hover:bg-white/[0.04] hover:text-white"
-            }`}
-          >
-            {active ? (
-              <span className="absolute top-1/2 left-0 h-4 w-[3px] -translate-y-1/2 rounded-full bg-[var(--gold)]" />
-            ) : null}
-            <Icon className="h-[1.05rem] w-[1.05rem] shrink-0" />
-            {link.label}
-          </Link>
+          <section key={section.label} aria-labelledby={headingId}>
+            <div className="mb-1.5 px-3.5">
+              <p id={headingId} className="text-[0.62rem] font-semibold uppercase tracking-[0.22em] text-white/40">
+                {section.label}
+              </p>
+              {section.description ? <p className="mt-0.5 text-[0.65rem] text-white/25">{section.description}</p> : null}
+            </div>
+            <div className="flex flex-col gap-0.5">
+              {section.links.map((link) => {
+                const active = link.href === "/admin" ? pathname === "/admin" : pathname === link.href || pathname.startsWith(`${link.href}/`);
+                const Icon = link.icon;
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={onNavigate}
+                    aria-current={active ? "page" : undefined}
+                    className={`relative flex items-center gap-3 rounded-lg px-3.5 py-2.5 text-sm tracking-[0.01em] transition ${
+                      active
+                        ? "bg-white/[0.06] text-[var(--gold-soft)]"
+                        : "text-[var(--muted)] hover:bg-white/[0.04] hover:text-white"
+                    }`}
+                  >
+                    {active ? (
+                      <span className="absolute left-0 top-1/2 h-4 w-[3px] -translate-y-1/2 rounded-full bg-[var(--gold)]" />
+                    ) : null}
+                    <Icon className="h-[1.05rem] w-[1.05rem] shrink-0" />
+                    {link.label}
+                  </Link>
+                );
+              })}
+            </div>
+          </section>
         );
       })}
     </nav>
