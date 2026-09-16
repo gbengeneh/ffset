@@ -30,11 +30,14 @@ const sections = [
   { href: "/admin/suppliers", label: "Suppliers", icon: SuppliersIcon },
   ] },
   { label: "Marketplace", description: "Online listings and fulfilment", links: [
-  { href: "/admin/marketplace", label: "Listings", icon: ProductsIcon },
+  { href: "/admin/marketplace", label: "Marketplace Products", icon: ProductsIcon },
   { href: "/admin/marketplace-orders", label: "Marketplace Orders", icon: OrdersIcon },
   { href: "/admin/delivery-zones", label: "Delivery Zones", icon: OrdersIcon },
-  { href: "/admin/cars", label: "Cars", icon: CarsIcon },
-  { href: "/admin/car-orders", label: "Car Orders", icon: CarOrdersIcon },
+  ] },
+  { label: "Vehicles", description: "Cars and vehicle reservations", links: [
+  { href: "/admin/cars", label: "Vehicle Listings", icon: CarsIcon },
+  { href: "/admin/vehicle-orders", label: "Vehicle Orders", icon: CarOrdersIcon },
+  { href: "/admin/car-orders", label: "Legacy Car Reservations", icon: CarOrdersIcon },
   ] },
   { label: "Experiences", links: [
   { href: "/admin/events", label: "Events", icon: EventsIcon },

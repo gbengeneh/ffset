@@ -40,7 +40,7 @@ export default function CashierPosPage() {
   );
   const [typeFilter, setTypeFilter] = useState("");
   const [search, setSearch] = useState("");
-  const productsPath = typeFilter ? `/admin/products?type=${typeFilter}` : "/admin/products";
+  const productsPath = typeFilter ? `/admin/products?pos=1&type=${typeFilter}` : "/admin/products?pos=1";
   const { data: products, loading: productsLoading, refetch: refetchProducts } = useApiResource<Product[]>(
     productsPath
   );

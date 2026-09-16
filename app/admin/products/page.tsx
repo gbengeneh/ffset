@@ -9,6 +9,8 @@ import { SelectField, TextAreaField, TextField } from "@/components/forms/fields
 import { useApiResource } from "@/hooks/use-api-resource";
 import { formatNaira, type Product } from "@/lib/admin-types";
 import { api, ApiError } from "@/lib/api-client";
+import { ImageField } from "@/components/forms/image-field";
+import { ProductThumbnail } from "@/components/admin/product-thumbnail";
 
 const TYPE_OPTIONS = [
   { label: "Wine", value: "wine" },
@@ -42,7 +44,7 @@ export default function AdminProductsPage() {
 
   const columns: DataTableColumn<Product>[] = useMemo(
     () => [
-      { key: "name", header: "Name", render: (row) => row.name },
+      { key: "name", header: "Product", render: (row) => <div className="flex items-center gap-3"><ProductThumbnail src={row.image_url} name={row.name} /><span>{row.name}</span></div> },
       { key: "type", header: "Type", render: (row) => row.type.replace("_", " ") },
       { key: "price", header: "Price", render: (row) => formatNaira(row.price) },
       {
@@ -88,10 +90,15 @@ export default function AdminProductsPage() {
     };
 
     try {
-      if (editing) {
-        await api.patch(`/admin/products/${editing.id}`, payload);
-      } else {
-        await api.post("/admin/products", payload);
+      const saved = editing
+        ? await api.patch<Product>(`/admin/products/${editing.id}`, payload)
+        : await api.post<Product>("/admin/products", payload);
+      setEditing(saved);
+      const image = formData.get("image");
+      if (image instanceof File && image.size) {
+        const upload = new FormData();
+        upload.set("image", image);
+        await api.post(`/admin/products/${saved.id}/image`, upload);
       }
       setFormOpen(false);
       refetch();
@@ -149,7 +156,7 @@ export default function AdminProductsPage() {
   return (
     <div className="space-y-6">
       <AdminPageHeader
-        title="Products"
+        title="In-Shop Products"
         description="Wines, drinks, gaming packages, and service line items — with live stock levels."
         action={
           <button type="button" className="luxury-button luxury-button-primary px-4 py-2.5 text-xs" onClick={openCreate}>
@@ -212,11 +219,11 @@ export default function AdminProductsPage() {
       )}
 
       <Modal open={formOpen} onClose={() => setFormOpen(false)} title={editing ? "Edit Product" : "Add Product"}>
-        <form className="space-y-4" onSubmit={handleSubmit}>
+        <form className="grid gap-3 sm:grid-cols-2" onSubmit={handleSubmit}>
           <TextField label="Name" name="name" defaultValue={editing?.name} required />
           <SelectField label="Type" name="type" defaultValue={editing?.type ?? "wine"} options={TYPE_OPTIONS} required />
           <TextField label="Category" name="category" defaultValue={editing?.category ?? ""} />
-          <TextAreaField label="Description" name="description" defaultValue={editing?.description ?? ""} rows={3} />
+          <div className="sm:col-span-2"><TextAreaField label="Description" name="description" defaultValue={editing?.description ?? ""} rows={3} /></div>
           <TextField label="Size" name="size" defaultValue={editing?.size ?? ""} placeholder="750ml" />
           <TextField
             label="Price (₦)"
@@ -227,7 +234,7 @@ export default function AdminProductsPage() {
             defaultValue={editing?.price}
             required
           />
-          <TextField label="Image URL" name="image_url" defaultValue={editing?.image_url ?? ""} />
+          <div className="sm:col-span-2"><ImageField existing={editing?.image_url} allowUrl /></div>
           <label className="flex items-center gap-2 text-sm text-[var(--muted)]">
             <input type="checkbox" name="is_stocked" defaultChecked={editing?.is_stocked ?? true} />
             Track stock quantity for this product
@@ -254,9 +261,9 @@ export default function AdminProductsPage() {
             required
           />
 
-          {formError ? <p className="text-[0.83rem] text-[rgb(220,145,145)]">{formError}</p> : null}
+          {formError ? <p role="alert" className="sm:col-span-2 text-[0.83rem] text-[rgb(220,145,145)]">{formError}</p> : null}
 
-          <button type="submit" className="luxury-button luxury-button-primary w-full justify-center px-4 py-3 text-sm" disabled={submitting}>
+          <button type="submit" className="luxury-button luxury-button-primary sm:col-span-2 w-full justify-center px-4 py-3 text-sm" disabled={submitting}>
             {submitting ? "Saving…" : "Save Product"}
           </button>
         </form>

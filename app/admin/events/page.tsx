@@ -8,6 +8,7 @@ import { SelectField, TextAreaField, TextField } from "@/components/forms/fields
 import { useApiResource } from "@/hooks/use-api-resource";
 import type { EventItem } from "@/lib/admin-types";
 import { api, ApiError } from "@/lib/api-client";
+import { ImageField } from "@/components/forms/image-field";
 
 const FREQUENCY_OPTIONS = [
   { label: "Weekly", value: "Weekly" },
@@ -62,10 +63,12 @@ export default function AdminEventsPage() {
     };
 
     try {
-      if (editing) {
-        await api.patch(`/admin/events/${editing.id}`, payload);
-      } else {
-        await api.post("/admin/events", payload);
+      const saved = editing ? await api.patch<EventItem>(`/admin/events/${editing.id}`, payload) : await api.post<EventItem>("/admin/events", payload);
+      setEditing(saved);
+      const image = formData.get("image");
+      if (image instanceof File && image.size) {
+        const upload = new FormData(); upload.set("image", image);
+        await api.post(`/admin/events/${saved.id}/image`, upload);
       }
       setFormOpen(false);
       refetch();
@@ -134,7 +137,7 @@ export default function AdminEventsPage() {
           />
           <TextAreaField label="Description" name="description" defaultValue={editing?.description ?? ""} rows={3} />
           <TextField label="Icon" name="icon" defaultValue={editing?.icon ?? ""} placeholder="music" />
-          <TextField label="Image URL" name="image_url" defaultValue={editing?.image_url ?? ""} />
+          <ImageField existing={editing?.image_url} allowUrl />
           <TextField label="Image Position" name="image_position" defaultValue={editing?.image_position ?? ""} />
 
           {formError ? <p className="text-[0.83rem] text-[rgb(220,145,145)]">{formError}</p> : null}

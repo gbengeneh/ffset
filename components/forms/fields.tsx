@@ -16,10 +16,10 @@ type FieldShellProps = {
 
 function FieldShell({ label, htmlFor, hint, children }: FieldShellProps) {
   return (
-    <label className="block space-y-2" htmlFor={htmlFor}>
+    <label className="block space-y-1" htmlFor={htmlFor}>
       <span className="form-label">{label}</span>
       {children}
-      {hint ? <span className="block text-xs leading-6 text-[var(--muted)]">{hint}</span> : null}
+      {hint ? <span className="block text-xs leading-4 text-[var(--muted)]">{hint}</span> : null}
     </label>
   );
 }
@@ -74,7 +74,7 @@ export function SelectField({
     <FieldShell label={label} htmlFor={fieldId} hint={hint}>
       <select id={fieldId} className={`form-input ${className ?? ""}`.trim()} {...props}>
         {options.map((option) => (
-          <option key={option.value} value={option.value} disabled={option.value === ""}>
+          <option key={option.value} value={option.value}>
             {option.label}
           </option>
         ))}

@@ -44,8 +44,8 @@ export function ContactForm() {
         }
       }}
     >
-      <Panel className="space-y-5">
-        <div className="grid gap-4 md:grid-cols-2">
+      <Panel compact className="space-y-3 !rounded-lg">
+        <div className="grid gap-3 md:grid-cols-2">
           <TextField label="Full Name" name="fullName" placeholder="Your full name" autoComplete="name" minLength={3} required />
           <TextField label="Email Address" name="email" type="email" placeholder="you@example.com" autoComplete="email" required />
         </div>

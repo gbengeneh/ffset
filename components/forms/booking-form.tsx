@@ -46,8 +46,8 @@ export function BookingForm() {
         }
       }}
     >
-      <Panel className="space-y-5">
-        <div className="grid gap-4 md:grid-cols-2">
+      <Panel compact className="space-y-3 !rounded-lg">
+        <div className="grid gap-3 md:grid-cols-2">
           <TextField label="Full Name" name="fullName" placeholder="Your full name" autoComplete="name" minLength={3} required />
           <TextField label="Phone Number" name="phone" type="tel" placeholder="0800 000 0000" autoComplete="tel" minLength={7} hint="Use a reachable phone number for booking confirmation." required />
           <TextField label="Date" name="date" type="date" required />

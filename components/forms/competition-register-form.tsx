@@ -63,7 +63,7 @@ export function CompetitionRegisterForm({ competitionId, onSuccess }: Competitio
 
   return (
     <form
-      className="space-y-4"
+      className="space-y-3"
       onSubmit={async (event) => {
         event.preventDefault();
         setError(null);
@@ -104,7 +104,7 @@ export function CompetitionRegisterForm({ competitionId, onSuccess }: Competitio
         }
       }}
     >
-      <div className="grid gap-3.5 md:grid-cols-2">
+      <div className="grid gap-3 md:grid-cols-2">
         <TextField label="Full Name" name="fullName" placeholder="Your full name" autoComplete="name" minLength={3} required />
         <TextField label="Phone Number" name="phone" type="tel" placeholder="0800 000 0000" autoComplete="tel" minLength={7} required />
         <TextField label="Email Address" name="email" type="email" placeholder="you@example.com" autoComplete="email" required />

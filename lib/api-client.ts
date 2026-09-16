@@ -64,7 +64,8 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   const payload = await response.json().catch(() => null);
 
   if (!response.ok) {
-    throw new ApiError(payload?.message ?? "Request failed.", response.status, payload?.errors);
+    const validation = payload?.errors ? Object.values(payload.errors).flat().join(" ") : null;
+    throw new ApiError(validation || payload?.message || "Request failed.", response.status, payload?.errors);
   }
 
   return payload as T;

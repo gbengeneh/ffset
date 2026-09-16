@@ -6,6 +6,11 @@ export type Paginated<T> = {
   per_page: number;
 };
 
+export type ResourcePaginated<T> = {
+  data: T[];
+  meta: { current_page: number; last_page: number; total: number; per_page: number };
+};
+
 export type Product = {
   id: number;
   name: string;
@@ -180,7 +185,21 @@ export type MarketplaceListing = {
   variants:Array<{id:number;sku:string|null;options:Record<string,string>;price:string|null;stock_quantity:number;is_active:boolean}>;
 };
 
-export type MarketplaceOrder = { id:number; reference_code:string; name:string; phone:string; email:string; fulfillment_type:"pickup"|"delivery"; delivery_address:string|null; delivery_zone?:{id:number;name:string;estimated_delivery:string|null}|null; subtotal:string;delivery_fee:string;total:string; status:"pending"|"confirmed"|"processing"|"ready_for_pickup"|"dispatched"|"delivered"|"cancelled"; payment_status:"unpaid"|"paid"|"refund_pending"|"refunded"; tracking_reference:string|null;internal_notes:string|null;cancellation_reason:string|null;created_at:string; items:Array<{id:number;listing_name:string;listing_sku:string|null;quantity:number;purchase_type:"full"|"deposit";unit_price:string;line_total:string;selected_options:Record<string,string>}>;payment_attempts:Array<{id:number;reference:string;provider:string;amount:string;status:string;paid_at:string|null;created_at:string}> };
+export type MarketplaceOrder = {
+  id: number; reference_code: string; name: string; phone: string; email: string;
+  fulfillment_type: "pickup" | "delivery"; delivery_address: string | null;
+  delivery_zone?: { id: number; name: string; estimated_delivery: string | null } | null;
+  subtotal: string; delivery_fee: string; total: string;
+  status: "pending" | "confirmed" | "processing" | "ready_for_pickup" | "dispatched" | "delivered" | "cancelled";
+  payment_status: "unpaid" | "paid" | "refund_pending" | "refunded";
+  tracking_reference: string | null; internal_notes: string | null; cancellation_reason: string | null; created_at: string;
+  items: Array<{
+    id: number; listing_name: string; listing_sku: string | null; quantity: number;
+    purchase_type: "full" | "deposit"; unit_price: string; line_total: string;
+    selected_options: Record<string, string>; is_preorder: boolean; category_slug: string | null;
+  }>;
+  payment_attempts: Array<{ id: number; reference: string; provider: string; amount: string; status: string; paid_at: string | null; created_at: string }>;
+};
 
 export type Order = {
   id: number;
